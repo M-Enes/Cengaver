@@ -1,0 +1,41 @@
+# --------< AOUTOMATIC >--------
+
+# BasedOnStyle: Microsoft
+
+# indent
+UseTab: Never
+
+# header/using sort
+SortIncludes: CaseInsensitive
+SortUsingDeclarations: true
+
+# --------< NON-AOUTOMATIC >--------
+
+ColumnLimit: 90
+
+IndentWidth: 4
+TabWidth: 4
+PointerAlignment: Middle
+ReferenceAlignment: Left
+
+# single-liners
+PackConstructorInitializers: NextLineOnly
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortBlocksOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+
+# braces
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: true
+  AfterControlStatement: Always
+  AfterClass: true
+  AfterStruct: true
+  AfterNamespace: true
+  AfterEnum: true
+  BeforeElse: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
