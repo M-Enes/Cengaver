@@ -15,7 +15,7 @@ ColumnLimit: 90
 
 IndentWidth: 4
 TabWidth: 4
-PointerAlignment: Middle
+# PointerAlignment: Middle
 ReferenceAlignment: Left
 
 # single-liners
