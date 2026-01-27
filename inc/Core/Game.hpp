@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Window.hpp"
+#include <SFML/Window/Event.hpp>
 #include <string>
 
 namespace Core
@@ -18,6 +19,9 @@ class Game
     ~Game();
 
     void Run();
+    void Stop();
+
+    void RaiseEvent(const sf::Event& event);
 
   private:
     GameSpecification specification;
