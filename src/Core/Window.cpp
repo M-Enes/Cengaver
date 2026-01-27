@@ -5,6 +5,8 @@
 #include <SFML/Window/ContextSettings.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <SFML/Window/WindowEnums.hpp>
+
 
 namespace Core
 {
@@ -20,7 +22,8 @@ Window::~Window()
 void Window::Create()
 {
     renderWindow = new sf::RenderWindow(
-        sf::VideoMode({specification.width, specification.height}), specification.title);
+        sf::VideoMode({specification.width, specification.height}), specification.title,
+        specification.fullScreen ? sf::State::Fullscreen : sf::State::Windowed);
 
     renderWindow->setVerticalSyncEnabled(specification.vsyncEnabled);
     renderWindow->setFramerateLimit(specification.fpsLimit);

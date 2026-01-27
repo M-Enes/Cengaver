@@ -19,6 +19,8 @@ struct WindowSpecification
     /* enabling VSync while fpsLimit is different than 0 could
     cause weird behavior */
     bool vsyncEnabled = false;
+
+    bool fullScreen = true;
 };
 
 class Game;
