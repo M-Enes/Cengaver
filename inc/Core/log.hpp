@@ -18,7 +18,7 @@ class Log
     } level;
 
   private:
-    const std::string path = "../log/";
+    const std::string path = "../../log/";
     std::ofstream fout;
     const std::time_t m_startTime;
 
