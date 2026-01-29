@@ -7,7 +7,6 @@
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Window/WindowEnums.hpp>
 
-
 namespace Core
 {
 Window::Window(const WindowSpecification& specification)
@@ -52,6 +51,11 @@ void Window::PollEvents(Game *game)
     {
         if (event.has_value()) { game->RaiseEvent(event.value()); }
     }
+}
+
+void Window::Update()
+{
+    renderWindow->display();
 }
 
 } // namespace Core
