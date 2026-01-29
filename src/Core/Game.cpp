@@ -41,10 +41,12 @@ void Game::Run()
 
         window->PollEvents(this);
 
-        for (Layer *layer : layerStack) { layer->OnUpdate(elapsed); }
-        for (Layer *layer : layerStack) { layer->OnRender(); }
+        window->Clear();
 
-        window->Update();
+        for (Layer *layer : layerStack) { layer->OnUpdate(elapsed); }
+        for (Layer *layer : layerStack) { layer->OnRender(*window); }
+
+        window->Display();
     }
 }
 
@@ -61,7 +63,7 @@ void Game::RaiseEvent(const sf::Event& event)
     // if event is handled, do not send the event to other layers, just break the loop
 
     Layer *layer;
-    for (auto it = layerStack.end(); it != layerStack.begin(); it--)
+    for (auto it = layerStack.rbegin(); it != layerStack.rend(); it++)
     {
         layer = *it;
         if (layer->OnEvent(event)) { break; }
