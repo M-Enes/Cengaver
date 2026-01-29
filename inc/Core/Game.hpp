@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Layer.hpp"
 #include "Window.hpp"
 #include <SFML/Window/Event.hpp>
 #include <string>
@@ -21,11 +22,14 @@ class Game
     void Run();
     void Stop();
 
+    void PushLayer(Layer& layer);
+
     void RaiseEvent(const sf::Event& event);
 
   private:
     GameSpecification specification;
     Window *window;
     bool running = false;
+    std::vector<Layer *> layerStack;
 };
 } // namespace Core

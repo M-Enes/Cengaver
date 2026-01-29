@@ -35,6 +35,7 @@ class Window
     void Destroy();
     void Close();
 
+    void Update();
     bool ShouldClose() const;
     void PollEvents(Game *game);
 

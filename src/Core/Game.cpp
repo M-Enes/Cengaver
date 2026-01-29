@@ -2,6 +2,8 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "Core/Layer.hpp"
+
 namespace Core
 {
 Game::Game(const GameSpecification& specification)
@@ -27,7 +29,6 @@ void Game::Run()
 
     sf::Clock clock;
     sf::Time previous = clock.restart();
-    int32_t lag = 0;
     while (running)
     {
         if (window->ShouldClose())
@@ -37,12 +38,13 @@ void Game::Run()
         }
 
         int32_t elapsed = clock.restart().asMilliseconds();
-        lag += elapsed;
 
         window->PollEvents(this);
 
-        // update layers
-        // render layers
+        for (Layer *layer : layerStack) { layer->OnUpdate(elapsed); }
+        for (Layer *layer : layerStack) { layer->OnRender(); }
+
+        window->Update();
     }
 }
 
@@ -57,11 +59,23 @@ void Game::RaiseEvent(const sf::Event& event)
 
     // traverse layers from front to back and send the event to them,
     // if event is handled, do not send the event to other layers, just break the loop
+
+    Layer *layer;
+    for (auto it = layerStack.end(); it != layerStack.begin(); it--)
+    {
+        layer = *it;
+        if (layer->OnEvent(event)) { break; }
+    }
 }
 
 void Game::Stop()
 {
     running = false;
+}
+
+void Game::PushLayer(Layer& layer)
+{
+    layerStack.push_back(&layer);
 }
 
 } // namespace Core
