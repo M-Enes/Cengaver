@@ -35,9 +35,12 @@ class Window
     void Destroy();
     void Close();
 
-    void Update();
+    void Clear();
+    void Display();
     bool ShouldClose() const;
     void PollEvents(Game *game);
+
+    sf::RenderWindow& GetRenderWindow();
 
   private:
     WindowSpecification specification;

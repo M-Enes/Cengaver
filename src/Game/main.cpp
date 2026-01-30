@@ -1,4 +1,5 @@
 #include "Core/Game.hpp"
+#include "Game/TestLevelLayer.hpp"
 
 int main()
 {
@@ -8,5 +9,7 @@ int main()
     gameSpec.windowSpec.height = 1080;
 
     Core::Game game(gameSpec);
+    Game::TestLevelLayer testLevel = Game::TestLevelLayer();
+    game.PushLayer(testLevel);
     game.Run();
 }

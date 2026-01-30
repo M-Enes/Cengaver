@@ -1,6 +1,8 @@
 #pragma once
 
-#include <SFML/Window/Event.hpp>
+#include "Core/Window.hpp"
+#include <SFML/Graphics.hpp>
+
 namespace Core
 {
 class Layer
@@ -14,7 +16,7 @@ class Layer
     };
 
     virtual void OnUpdate(float timeStep) {};
-    virtual void OnRender() {};
+    virtual void OnRender(Core::Window& window) {};
 
   private:
 };

@@ -53,9 +53,20 @@ void Window::PollEvents(Game *game)
     }
 }
 
-void Window::Update()
+void Window::Clear()
+{
+    renderWindow->clear();
+}
+
+void Window::Display()
 {
     renderWindow->display();
+}
+
+/* Do not call before Create() or after Destroy() */
+sf::RenderWindow& Window::GetRenderWindow()
+{
+    return *renderWindow;
 }
 
 } // namespace Core
