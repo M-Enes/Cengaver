@@ -1,26 +1,28 @@
 #include "Game/TestLevelLayer.hpp"
-#include "Core/Window.hpp"
-#include <SFML/Graphics/RenderWindow.hpp>
+#include "Core/Entity.hpp"
 
 namespace Game
 {
-TestLevelLayer::TestLevelLayer()
-    : characterTexture("../../res/images/idle_0.png"), characterSprite(characterTexture)
-{
-    characterSprite.setPosition({500.0f, 500.0f});
-}
-TestLevelLayer::~TestLevelLayer() {}
+    TestLevelLayer::TestLevelLayer()
+    {
+        character = new Core::Entity({500, 500}, "../../res/images/idle_0.png");
+    }
 
-bool TestLevelLayer::OnEvent(const sf::Event& event)
-{
-    return false;
-}
+    TestLevelLayer::~TestLevelLayer()
+    {
+        delete character;
+    }
 
-void TestLevelLayer::OnUpdate(float timeStep) {}
+    bool TestLevelLayer::OnEvent(const sf::Event& event)
+    {
+        return false;
+    }
 
-void TestLevelLayer::OnRender(Core::Window& window)
-{
-    sf::RenderWindow& renderWindow = window.GetRenderWindow();
-    renderWindow.draw(characterSprite);
-}
+    void TestLevelLayer::OnUpdate(float timeStep) {}
+
+    void TestLevelLayer::OnRender(Core::Window& window)
+    {
+        sf::RenderWindow& renderWindow = window.GetRenderWindow();
+        character->OnRender(renderWindow);
+    }
 } // namespace Game

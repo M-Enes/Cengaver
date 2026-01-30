@@ -1,3 +1,4 @@
+// There must be a log folder for this to work!
 #pragma once
 
 #include <cstdint>

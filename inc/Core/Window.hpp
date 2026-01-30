@@ -6,44 +6,44 @@
 
 namespace Core
 {
-struct WindowSpecification
-{
-    std::string title;
-    uint32_t width = 1280;
-    uint32_t height = 720;
+    struct WindowSpecification
+    {
+        std::string title;
+        uint32_t width = 1280;
+        uint32_t height = 720;
 
-    /* Frames Per Second Limit
-    make it 0 to not limit FPS */
-    uint32_t fpsLimit = 60;
+        /* Frames Per Second Limit
+        make it 0 to not limit FPS */
+        uint32_t fpsLimit = 60;
 
-    /* enabling VSync while fpsLimit is different than 0 could
-    cause weird behavior */
-    bool vsyncEnabled = false;
+        /* enabling VSync while fpsLimit is different than 0 could
+        cause weird behavior */
+        bool vsyncEnabled = false;
 
-    bool fullScreen = true;
-};
+        bool fullScreen = true;
+    };
 
-class Game;
+    class Game;
 
-class Window
-{
-  public:
-    Window(const WindowSpecification& specification);
-    ~Window();
+    class Window
+    {
+      public:
+        Window(const WindowSpecification& specification);
+        ~Window();
 
-    void Create();
-    void Destroy();
-    void Close();
+        void Create();
+        void Destroy();
+        void Close();
 
-    void Clear();
-    void Display();
-    bool ShouldClose() const;
-    void PollEvents(Game *game);
+        void Clear();
+        void Display();
+        bool ShouldClose() const;
+        void PollEvents(Game * game);
 
-    sf::RenderWindow& GetRenderWindow();
+        sf::RenderWindow& GetRenderWindow();
 
-  private:
-    WindowSpecification specification;
-    sf::RenderWindow *renderWindow = nullptr;
-};
+      private:
+        WindowSpecification specification;
+        sf::RenderWindow * renderWindow = nullptr;
+    };
 } // namespace Core

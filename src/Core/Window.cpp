@@ -9,64 +9,65 @@
 
 namespace Core
 {
-Window::Window(const WindowSpecification& specification)
-    : specification(specification)
-{}
+    Window::Window(const WindowSpecification& specification)
+        : specification(specification)
+    {}
 
-Window::~Window()
-{
-    Destroy();
-}
-
-void Window::Create()
-{
-    renderWindow = new sf::RenderWindow(
-        sf::VideoMode({specification.width, specification.height}), specification.title,
-        specification.fullScreen ? sf::State::Fullscreen : sf::State::Windowed);
-
-    renderWindow->setVerticalSyncEnabled(specification.vsyncEnabled);
-    renderWindow->setFramerateLimit(specification.fpsLimit);
-}
-
-void Window::Destroy()
-{
-    if (renderWindow) { delete renderWindow; }
-
-    renderWindow = nullptr;
-}
-
-void Window::Close()
-{
-    renderWindow->close();
-}
-
-bool Window::ShouldClose() const
-{
-    return !renderWindow->isOpen();
-}
-
-void Window::PollEvents(Game *game)
-{
-    while (const std::optional event = renderWindow->pollEvent())
+    Window::~Window()
     {
-        if (event.has_value()) { game->RaiseEvent(event.value()); }
+        Destroy();
     }
-}
 
-void Window::Clear()
-{
-    renderWindow->clear();
-}
+    void Window::Create()
+    {
+        renderWindow = new sf::RenderWindow(
+            sf::VideoMode({specification.width, specification.height}),
+            specification.title,
+            specification.fullScreen ? sf::State::Fullscreen : sf::State::Windowed);
 
-void Window::Display()
-{
-    renderWindow->display();
-}
+        renderWindow->setVerticalSyncEnabled(specification.vsyncEnabled);
+        renderWindow->setFramerateLimit(specification.fpsLimit);
+    }
 
-/* Do not call before Create() or after Destroy() */
-sf::RenderWindow& Window::GetRenderWindow()
-{
-    return *renderWindow;
-}
+    void Window::Destroy()
+    {
+        if (renderWindow) { delete renderWindow; }
+
+        renderWindow = nullptr;
+    }
+
+    void Window::Close()
+    {
+        renderWindow->close();
+    }
+
+    bool Window::ShouldClose() const
+    {
+        return !renderWindow->isOpen();
+    }
+
+    void Window::PollEvents(Game * game)
+    {
+        while (const std::optional event = renderWindow->pollEvent())
+        {
+            if (event.has_value()) { game->RaiseEvent(event.value()); }
+        }
+    }
+
+    void Window::Clear()
+    {
+        renderWindow->clear();
+    }
+
+    void Window::Display()
+    {
+        renderWindow->display();
+    }
+
+    /* Do not call before Create() or after Destroy() */
+    sf::RenderWindow& Window::GetRenderWindow()
+    {
+        return *renderWindow;
+    }
 
 } // namespace Core
