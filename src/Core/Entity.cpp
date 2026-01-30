@@ -13,13 +13,15 @@ namespace Core
     Entity::~Entity() {};
 
     void Entity::OnEvent(const sf::Event& Event) {}
+
     void Entity::OnUpdate(float dt)
     {
         m_velocity += m_acceleration * dt;
         m_position += m_velocity * dt;
         m_hitbox = {m_position, m_position + sf::Vector2f{16, 16}};
     }
-    void Entity::OnRender(sf::RenderWindow& renderWindow) // Instead RenderWindow?
+
+    void Entity::OnRender(sf::RenderWindow& renderWindow)
     {
         renderWindow.draw(m_sprite);
     }

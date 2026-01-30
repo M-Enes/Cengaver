@@ -11,17 +11,6 @@ namespace Core
     class Entity
     {
       public:
-        enum State
-        {
-            Idle,
-            Running,
-            Jumping,
-            Falling,
-            Attacking,
-            Swimming,
-            Victory,
-            Loss
-        };
         bool isAlive = true;
         sf::Vector2f m_position;
         sf::Vector2f m_velocity;

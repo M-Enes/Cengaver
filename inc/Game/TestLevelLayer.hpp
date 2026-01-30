@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Core/Entity.hpp"
 #include "Core/Layer.hpp"
+#include "Core/Player.hpp"
 
 namespace Game
 {
     class TestLevelLayer : public Core::Layer
     {
       public:
-        Core::Entity * character = nullptr;
+        Core::Player *character = nullptr;
 
       public:
         TestLevelLayer();
