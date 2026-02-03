@@ -15,6 +15,8 @@ ColumnLimit: 90
 
 IndentWidth: 4
 TabWidth: 4
+NamespaceIndentation: All
+
 # PointerAlignment: Middle
 ReferenceAlignment: Left
 
