@@ -5,7 +5,8 @@ namespace Game
 {
     TestLevelLayer::TestLevelLayer()
     {
-        character = new Core::Player({500, 500}, "../../res/images/idle_0.png");
+        character = new Core::Player({500, 500}, {{8, 9}, {23, 24}}, 10,
+                                     sf::Texture("../../res/images/idle_0.png"));
     }
 
     TestLevelLayer::~TestLevelLayer()

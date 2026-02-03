@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Core/Entity.hpp"
-#include <SFML/System/Vector2.hpp>
 
 namespace Core
 {
     class Player : public Entity
     {
-        enum State
+        enum
         {
             Idle,
             Running,
@@ -17,10 +16,11 @@ namespace Core
             Swiming,
             Victory,
             Loss
-        };
+        } m_state;
 
       public:
-        Player(sf::Vector2f position, std::string texturePath);
+        Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
+               sf::Texture texture);
         ~Player();
 
         void OnEvent(const sf::Event& Event) override;

@@ -2,13 +2,10 @@
 
 namespace Core
 {
-    Player::Player(sf::Vector2f position, std::string texturePath)
-        : Entity(position, texturePath)
-    {
-        m_position = position;
-        m_sprite.setPosition(m_position);
-        m_sprite.setScale({5, 5});
-    }
+    Player::Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
+                   sf::Texture texture)
+        : Entity(position, hitbox, scale, texture), m_state(Idle)
+    {}
 
     Player::~Player() {}
 
@@ -17,9 +14,11 @@ namespace Core
     void Player::OnUpdate(float dt)
     {
         m_velocity += m_acceleration * dt;
-        m_position += m_velocity * dt;
+        sf::Vector2f dx = m_velocity * dt;
+        m_position += dx;
+        m_hitbox.x += dx;
+        m_hitbox.y += dx;
         m_sprite.setPosition(m_position);
-        m_hitbox = {m_position, m_position + sf::Vector2f{16, 16}};
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)

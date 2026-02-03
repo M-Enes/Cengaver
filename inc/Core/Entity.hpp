@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SFML/Graphics/RenderWindow.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -12,16 +12,29 @@ namespace Core
     {
       public:
         bool isAlive = true;
-        sf::Vector2f m_position;
-        sf::Vector2f m_velocity;
-        sf::Vector2f m_acceleration;
+        sf::Vector2f m_position, m_velocity, m_acceleration;
         sf::Vector2<sf::Vector2f> m_hitbox;
-        sf::Texture m_texture;
+        const sf::Texture m_texture;
         sf::Sprite m_sprite;
+        float m_scale;
         uint8_t m_animationFrame, m_animationOffset;
 
       public:
-        Entity(sf::Vector2f position, std::string texturePath);
+        ////////////////////////////////////////////////////////////
+        /// \brief Constructs an entity
+        ///
+        /// \param position Start position
+        ///
+        /// \param hitbox Hitbox's corners' coordinates relative to top-left corner of the
+        /// texture
+        ///
+        /// \param scale Coefficient of the texture
+        ///
+        /// \param texture sf::Texture instance for entity
+        ///
+        ////////////////////////////////////////////////////////////
+        Entity(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
+               sf::Texture texture);
         virtual ~Entity();
 
         virtual void OnEvent(const sf::Event& Event);
