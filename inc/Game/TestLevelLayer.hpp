@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/Entity.hpp"
 #include "Core/Layer.hpp"
 #include "Core/Player.hpp"
 
@@ -9,6 +10,7 @@ namespace Game
     {
       public:
         Core::Player *character = nullptr;
+        Core::Entity *block = nullptr;
 
       public:
         TestLevelLayer();

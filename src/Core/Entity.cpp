@@ -10,6 +10,7 @@ namespace Core
           m_sprite(m_texture),
           m_scale(scale)
     {
+        m_hitbox.y = (m_hitbox.y - m_hitbox.x) * m_scale + m_hitbox.x;
         m_sprite.setOrigin(m_hitbox.x);
         m_sprite.setPosition(m_position);
         m_sprite.setScale({m_scale, m_scale});

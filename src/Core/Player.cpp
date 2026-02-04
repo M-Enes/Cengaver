@@ -1,4 +1,5 @@
 #include "Core/Player.hpp"
+#include <SFML/Window/Keyboard.hpp>
 
 namespace Core
 {
@@ -9,7 +10,19 @@ namespace Core
 
     Player::~Player() {}
 
-    void Player::OnEvent(const sf::Event& Event) {}
+    void Player::OnEvent(const sf::Event& Event)
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+            m_velocity = {0, -1};
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+            m_velocity = {-1, 0};
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+            m_velocity = {0, 1};
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+            m_velocity = {1, 0};
+        else
+            m_velocity = {0, 0};
+    }
 
     void Player::OnUpdate(float dt)
     {
