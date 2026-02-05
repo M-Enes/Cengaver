@@ -1,18 +1,17 @@
 #include "Game/TestLevelLayer.hpp"
 #include "Core/Physics.hpp"
 #include "Core/Player.hpp"
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 
 namespace Game
 {
     TestLevelLayer::TestLevelLayer()
     {
-        character = new Core::Player({500, 500}, {{8, 9}, {24, 25}}, 10,
+        character = new Core::Player({100, 100}, {{8, 9}, {24, 25}}, 6,
                                      sf::Texture("../../res/images/idle_0.png"));
-        block = new Core::Entity({600, 600}, {{0, 0}, {15, 15}}, 10,
+        block = new Core::Entity({200, 200}, {{0, 0}, {16, 16}}, 6,
                                  sf::Texture("../../res/images/castle-tileset.png", false,
-                                             {{16, 16}, {17, 17}}));
+                                             {{16, 16}, {16, 16}}));
     }
 
     TestLevelLayer::~TestLevelLayer()
@@ -41,15 +40,15 @@ namespace Game
         character->OnRender(renderWindow);
         block->OnRender(renderWindow);
 
-        sf::RectangleShape charbox({character->m_hitbox.y.x - character->m_hitbox.x.x,
-                                    character->m_hitbox.y.y - character->m_hitbox.x.y});
-        charbox.setPosition(character->m_position);
+        sf::VertexArray charbox(sf::PrimitiveType::Lines, 2);
+        charbox[0].position = character->m_hitbox.x;
+        charbox[1].position = character->m_hitbox.y;
+
         renderWindow.draw(charbox);
 
-        sf::RectangleShape blockbox({block->m_hitbox.y.x - block->m_hitbox.x.x,
-                                     block->m_hitbox.y.y - block->m_hitbox.x.y});
-        blockbox.setPosition(block->m_position);
-        blockbox.setFillColor(sf::Color::Cyan);
+        sf::VertexArray blockbox(sf::PrimitiveType::Lines, 2);
+        blockbox[0].position = block->m_hitbox.x;
+        blockbox[1].position = block->m_hitbox.y;
         renderWindow.draw(blockbox);
     }
 } // namespace Game

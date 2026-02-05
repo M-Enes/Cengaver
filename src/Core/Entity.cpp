@@ -4,14 +4,10 @@ namespace Core
 {
     Entity::Entity(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
                    sf::Texture texture)
-        : m_position(position),
-          m_hitbox(hitbox),
-          m_texture(texture),
-          m_sprite(m_texture),
-          m_scale(scale)
+        : m_position(position), m_scale(scale), m_texture(texture), m_sprite(m_texture)
     {
-        m_hitbox.y = (m_hitbox.y - m_hitbox.x) * m_scale + m_hitbox.x;
-        m_sprite.setOrigin(m_hitbox.x);
+        m_hitbox = {m_position + m_scale * hitbox.x, m_position + m_scale * hitbox.y};
+        // m_sprite.setOrigin(m_hitbox.x);
         m_sprite.setPosition(m_position);
         m_sprite.setScale({m_scale, m_scale});
     }
@@ -27,7 +23,7 @@ namespace Core
         m_position += dx;
         m_hitbox.x += dx;
         m_hitbox.y += dx;
-        m_sprite.setPosition(m_position);
+        m_sprite.move(dx);
     }
 
     void Entity::OnRender(sf::RenderWindow& renderWindow)

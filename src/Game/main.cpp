@@ -9,8 +9,8 @@ int main()
     // Core::logger.info("Init Start");
     Core::GameSpecification gameSpec;
     gameSpec.name = "Cengaver";
-    gameSpec.windowSpec.width = 1920;
-    gameSpec.windowSpec.height = 1080;
+    gameSpec.windowSpec.width = 640;
+    gameSpec.windowSpec.height = 360;
 
     Core::Game game(gameSpec);
     Game::TestLevelLayer testLevel = Game::TestLevelLayer();

@@ -13,10 +13,10 @@ namespace Core
       public:
         bool isAlive = true;
         sf::Vector2f m_position, m_velocity, m_acceleration;
+        float m_scale;
         sf::Vector2<sf::Vector2f> m_hitbox;
         const sf::Texture m_texture;
         sf::Sprite m_sprite;
-        float m_scale;
         uint8_t m_animationFrame, m_animationOffset;
 
       public:
@@ -26,7 +26,7 @@ namespace Core
         /// \param position Start position
         ///
         /// \param hitbox Hitbox's corners' coordinates relative to top-left corner of the
-        /// texture
+        /// texture you passed
         ///
         /// \param scale Coefficient of the texture
         ///
