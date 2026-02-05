@@ -7,14 +7,13 @@ namespace Core
         : m_position(position), m_scale(scale), m_texture(texture), m_sprite(m_texture)
     {
         m_hitbox = {m_position + m_scale * hitbox.x, m_position + m_scale * hitbox.y};
-        // m_sprite.setOrigin(m_hitbox.x);
         m_sprite.setPosition(m_position);
         m_sprite.setScale({m_scale, m_scale});
     }
 
     Entity::~Entity() {};
 
-    void Entity::OnEvent(const sf::Event& Event) {}
+    void Entity::OnEvent(const sf::Event& event) {}
 
     void Entity::OnUpdate(float dt)
     {

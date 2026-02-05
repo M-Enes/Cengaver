@@ -11,16 +11,15 @@ namespace Core
     class Entity
     {
       public:
-        struct Hitbox
+        struct
         {
             sf::Vector2f topLeft;
             sf::Vector2f bottomRight;
-        };
+        } m_hitbox;
 
         bool isAlive = true;
         sf::Vector2f m_position, m_velocity, m_acceleration;
         float m_scale;
-        Hitbox m_hitbox;
         const sf::Texture m_texture;
         sf::Sprite m_sprite;
         uint8_t m_animationFrame, m_animationOffset;
