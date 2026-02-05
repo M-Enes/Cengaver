@@ -29,8 +29,8 @@ namespace Core
         m_velocity += m_acceleration * dt;
         sf::Vector2f dx = m_velocity * dt;
         m_position += dx;
-        m_hitbox.x += dx;
-        m_hitbox.y += dx;
+        m_hitbox.topLeft += dx;
+        m_hitbox.bottomRight += dx;
         m_sprite.setPosition(m_position);
     }
 

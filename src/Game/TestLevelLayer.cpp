@@ -41,14 +41,14 @@ namespace Game
         block->OnRender(renderWindow);
 
         sf::VertexArray charbox(sf::PrimitiveType::Lines, 2);
-        charbox[0].position = character->m_hitbox.x;
-        charbox[1].position = character->m_hitbox.y;
+        charbox[0].position = character->m_hitbox.topLeft;
+        charbox[1].position = character->m_hitbox.bottomRight;
 
         renderWindow.draw(charbox);
 
         sf::VertexArray blockbox(sf::PrimitiveType::Lines, 2);
-        blockbox[0].position = block->m_hitbox.x;
-        blockbox[1].position = block->m_hitbox.y;
+        blockbox[0].position = block->m_hitbox.topLeft;
+        blockbox[1].position = block->m_hitbox.bottomRight;
         renderWindow.draw(blockbox);
     }
 } // namespace Game

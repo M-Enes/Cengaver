@@ -6,10 +6,10 @@ namespace Core
     int a = 0;
     bool AABB::Check(Core::Entity *obj1, Core::Entity *obj2)
     {
-        if ((obj1->m_hitbox.y.x > obj2->m_hitbox.x.x) &
-            (obj1->m_hitbox.x.x < obj2->m_hitbox.y.x) &
-            (obj1->m_hitbox.y.y > obj2->m_hitbox.x.y) &
-            (obj1->m_hitbox.x.y < obj2->m_hitbox.y.y))
+        if ((obj1->m_hitbox.bottomRight.x > obj2->m_hitbox.topLeft.x) &
+            (obj1->m_hitbox.topLeft.x < obj2->m_hitbox.bottomRight.x) &
+            (obj1->m_hitbox.bottomRight.y > obj2->m_hitbox.topLeft.y) &
+            (obj1->m_hitbox.topLeft.y < obj2->m_hitbox.bottomRight.y))
         {
             std::cout << "Collision " << a++ << " detected" << std::endl;
 
