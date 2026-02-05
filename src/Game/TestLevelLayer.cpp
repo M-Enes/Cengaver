@@ -22,23 +22,23 @@ namespace Game
 
     bool TestLevelLayer::OnEvent(const sf::Event& event)
     {
-        character->OnEvent(event);
         block->OnEvent(event);
+        character->OnEvent(event);
         return false;
     }
 
     void TestLevelLayer::OnUpdate(float dt)
     {
-        character->OnUpdate(dt);
         block->OnUpdate(dt);
-        Core::AABB::Check(character, block);
+        character->OnUpdate(dt);
+        Core::AABB(character, block);
     }
 
     void TestLevelLayer::OnRender(Core::Window& window)
     {
         sf::RenderWindow& renderWindow = window.GetRenderWindow();
-        character->OnRender(renderWindow);
         block->OnRender(renderWindow);
+        character->OnRender(renderWindow);
 
         sf::VertexArray charbox(sf::PrimitiveType::Lines, 2);
         charbox[0].position = character->m_hitbox.topLeft;

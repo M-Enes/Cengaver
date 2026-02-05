@@ -8,7 +8,11 @@ namespace Core
     class AABB
     {
       public:
-        static bool Check(Core::Entity *entity1, Core::Entity *entity2);
+        AABB(Core::Entity *object1, Core::Entity *object2);
+
+      private:
+        bool Check(float distances[4]);
+        void Effect(Core::Entity *obj1, Core::Entity *obj2);
     };
 
     // Seperating Axis Theorem
