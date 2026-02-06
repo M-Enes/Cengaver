@@ -26,5 +26,7 @@ namespace Core
         void OnEvent(const sf::Event& Event) override;
         void OnUpdate(float dt) override;
         void OnRender(sf::RenderWindow& renderWindow) override;
+
+        void Move(sf::Vector2f dx) override;
     };
 } // namespace Core

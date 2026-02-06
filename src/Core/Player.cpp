@@ -13,13 +13,13 @@ namespace Core
     void Player::OnEvent(const sf::Event& Event)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            m_velocity = {0, -1};
+            m_velocity = {0, -0.5f};
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            m_velocity = {-1, 0};
+            m_velocity = {-0.5f, 0};
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-            m_velocity = {0, 1};
+            m_velocity = {0, 0.5f};
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-            m_velocity = {1, 0};
+            m_velocity = {0.5f, 0};
         else
             m_velocity = {0, 0};
     }
@@ -38,4 +38,13 @@ namespace Core
     {
         renderWindow.draw(m_sprite);
     }
+
+    void Player::Move(sf::Vector2f dx)
+    {
+        m_position += dx;
+        m_hitbox.topLeft += dx;
+        m_hitbox.bottomRight += dx;
+        m_sprite.move(dx);
+    }
+
 } // namespace Core

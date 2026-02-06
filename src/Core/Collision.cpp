@@ -1,6 +1,6 @@
 #include "Core/Collision.hpp"
 #include <algorithm>
-// #include <iostream>
+#include <iostream>
 #include <SFML/System/Vector2.hpp>
 
 namespace Core
@@ -43,8 +43,13 @@ namespace Core
         std::sort(y, y + 4);
         sf::Vector2f overlap = {x[2] - x[1], y[2] - y[1]};
         obj1->m_velocity = {0, 0};
-        obj1->Move(-overlap);
+        if (overlap.x < overlap.y)
+            obj1->Move({-overlap.x, 0});
+        else if (overlap.x > overlap.y)
+            obj1->Move({0, -overlap.y});
+        else
+            obj1->Move({-overlap.x, -overlap.y});
 
-        // std::cout << overlap.x << ", " << overlap.y << "\n";
+        std::cout << overlap.x << ", " << overlap.y << "\n";
     }
 } // namespace Core
