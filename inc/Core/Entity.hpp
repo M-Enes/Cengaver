@@ -46,7 +46,6 @@ namespace Core
         virtual void OnUpdate(float dt);
         virtual void OnRender(sf::RenderWindow& renderWindow);
 
-      private:
-        void Run();
+        void Move(sf::Vector2f dx);
     };
 } // namespace Core

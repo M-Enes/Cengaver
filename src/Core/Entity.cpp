@@ -18,15 +18,19 @@ namespace Core
     void Entity::OnUpdate(float dt)
     {
         m_velocity += m_acceleration * dt;
-        sf::Vector2f dx = m_velocity * dt;
-        m_position += dx;
-        m_hitbox.topLeft += dx;
-        m_hitbox.bottomRight += dx;
-        m_sprite.move(dx);
+        Move(m_velocity * dt);
     }
 
     void Entity::OnRender(sf::RenderWindow& renderWindow)
     {
         renderWindow.draw(m_sprite);
+    }
+
+    void Entity::Move(sf::Vector2f dx)
+    {
+        m_position += dx;
+        m_hitbox.topLeft += dx;
+        m_hitbox.bottomRight += dx;
+        m_sprite.move(dx);
     }
 } // namespace Core
