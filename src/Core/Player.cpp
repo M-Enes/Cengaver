@@ -12,16 +12,26 @@ namespace Core
 
     void Player::OnEvent(const sf::Event& Event)
     {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            m_velocity = {0, -0.5f};
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            m_velocity = {-0.5f, 0};
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-            m_velocity = {0, 0.5f};
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-            m_velocity = {0.5f, 0};
+        if (inputProcessed)
+        {
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+                m_velocity = {0, -0.5f};
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+                m_velocity = {-0.5f, 0};
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+                m_velocity = {0, 0.5f};
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+                m_velocity = {0.5f, 0};
+            else
+                m_velocity = {0, 0};
+
+            inputProcessed = false;
+        }
         else
-            m_velocity = {0, 0};
+        {
+            inputProcessed = true;
+        }
     }
 
     void Player::OnUpdate(float dt)

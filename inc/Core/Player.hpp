@@ -6,6 +6,19 @@ namespace Core
 {
     class Player : public Entity
     {
+
+      public:
+        Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
+               sf::Texture texture);
+        ~Player();
+
+        void OnEvent(const sf::Event& Event) override;
+        void OnUpdate(float dt) override;
+        void OnRender(sf::RenderWindow& renderWindow) override;
+
+        void Move(sf::Vector2f dx) override;
+
+      private:
         enum
         {
             Idle,
@@ -18,15 +31,6 @@ namespace Core
             Loss
         } m_state;
 
-      public:
-        Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-               sf::Texture texture);
-        ~Player();
-
-        void OnEvent(const sf::Event& Event) override;
-        void OnUpdate(float dt) override;
-        void OnRender(sf::RenderWindow& renderWindow) override;
-
-        void Move(sf::Vector2f dx) override;
+        bool inputProcessed = true;
     };
 } // namespace Core
