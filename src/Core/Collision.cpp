@@ -43,6 +43,8 @@ namespace Core
         std::sort(y, y + 4);
         sf::Vector2f overlap = {x[2] - x[1], y[2] - y[1]};
         obj1->m_velocity = {0, 0};
+        obj1->Move(-overlap);
+
         // std::cout << overlap.x << ", " << overlap.y << "\n";
     }
 } // namespace Core
