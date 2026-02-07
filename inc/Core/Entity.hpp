@@ -17,7 +17,13 @@ namespace Core
             sf::Vector2f bottomRight;
         } m_hitbox;
 
-        bool isAlive = true;
+        enum
+        {
+            Static,
+            Dynamic
+        } m_kineticState;
+
+        bool m_isAlive = true;
         sf::Vector2f m_position, m_velocity, m_acceleration;
         float m_scale;
         const sf::Texture m_texture;

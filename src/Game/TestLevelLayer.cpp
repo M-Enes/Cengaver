@@ -1,6 +1,7 @@
 #include "Game/TestLevelLayer.hpp"
 #include "Core/Physics.hpp"
 #include "Core/Player.hpp"
+#include <iostream>
 #include <SFML/Graphics/VertexArray.hpp>
 
 namespace Game
@@ -12,6 +13,8 @@ namespace Game
         block = new Core::Entity({200, 200}, {{0, 0}, {16, 16}}, 6,
                                  sf::Texture("../../res/images/castle-tileset.png", false,
                                              {{16, 16}, {16, 16}}));
+        character->m_kineticState = Core::Entity::Dynamic;
+        block->m_kineticState = Core::Entity::Dynamic;
     }
 
     TestLevelLayer::~TestLevelLayer()

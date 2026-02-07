@@ -1,5 +1,5 @@
 #include "Core/Collision.hpp"
-#include <algorithm>
+#include "Core/Entity.hpp"
 #include <iostream>
 #include <SFML/System/Vector2.hpp>
 
@@ -55,7 +55,21 @@ namespace Core
             overlap.y = obj1->m_hitbox.topLeft.y - obj2->m_hitbox.bottomRight.y;
         }
 
-        obj1->Move({-overlap.x, -overlap.y});
-        obj1->m_velocity = {0, 0};
+        if (obj1->m_kineticState == Entity::Dynamic &
+            obj2->m_kineticState == Entity::Dynamic)
+        {
+            obj1->Move({(-overlap.x) / 2, (-overlap.y) / 2});
+            obj2->Move({(overlap.x) / 2, (overlap.y) / 2});
+        }
+        else if (obj1->m_kineticState == Entity::Dynamic)
+        {
+            obj1->Move({-overlap.x, -overlap.y});
+            obj1->m_velocity = {0, 0};
+        }
+        else if (obj2->m_kineticState == Entity::Dynamic)
+        {
+            obj2->Move({-overlap.x, -overlap.y});
+            obj2->m_velocity = {0, 0};
+        }
     }
 } // namespace Core
