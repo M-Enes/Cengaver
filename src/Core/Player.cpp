@@ -14,7 +14,6 @@ namespace Core
     {
         if (inputProcessed)
         {
-
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
                 m_velocity = {0, -0.5f};
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
@@ -28,10 +27,6 @@ namespace Core
 
             inputProcessed = false;
         }
-        else
-        {
-            inputProcessed = true;
-        }
     }
 
     void Player::OnUpdate(float dt)
@@ -42,6 +37,7 @@ namespace Core
         m_hitbox.topLeft += dx;
         m_hitbox.bottomRight += dx;
         m_sprite.setPosition(m_position);
+        inputProcessed = true;
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
