@@ -35,21 +35,27 @@ namespace Core
 
     void AABB::Effect(Core::Entity *obj1, Core::Entity *obj2)
     {
-        float x[4] = {obj1->m_hitbox.bottomRight.x, obj2->m_hitbox.topLeft.x,
-                      obj2->m_hitbox.bottomRight.x, obj1->m_hitbox.topLeft.x};
-        float y[4] = {obj1->m_hitbox.bottomRight.y, obj2->m_hitbox.topLeft.y,
-                      obj2->m_hitbox.bottomRight.y, obj1->m_hitbox.topLeft.y};
-        std::sort(x, x + 4);
-        std::sort(y, y + 4);
-        sf::Vector2f overlap = {x[2] - x[1], y[2] - y[1]};
-        obj1->m_velocity = {0, 0};
-        if (overlap.x < overlap.y)
-            obj1->Move({-overlap.x, 0});
-        else if (overlap.x > overlap.y)
-            obj1->Move({0, -overlap.y});
-        else
-            obj1->Move({-overlap.x, -overlap.y});
+        sf::Vector2f overlap = {0, 0};
 
-        std::cout << overlap.x << ", " << overlap.y << "\n";
+        if (obj1->m_velocity.x > 0)
+        {
+            overlap.x = obj1->m_hitbox.bottomRight.x - obj2->m_hitbox.topLeft.x;
+        }
+        else if (obj1->m_velocity.x < 0)
+        {
+            overlap.x = obj1->m_hitbox.topLeft.x - obj2->m_hitbox.bottomRight.x;
+        }
+
+        if (obj1->m_velocity.y > 0)
+        {
+            overlap.y = obj1->m_hitbox.bottomRight.y - obj2->m_hitbox.topLeft.y;
+        }
+        else if (obj1->m_velocity.y < 0)
+        {
+            overlap.y = obj1->m_hitbox.topLeft.y - obj2->m_hitbox.bottomRight.y;
+        }
+
+        obj1->Move({-overlap.x, -overlap.y});
+        obj1->m_velocity = {0, 0};
     }
 } // namespace Core
