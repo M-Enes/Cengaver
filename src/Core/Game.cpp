@@ -37,14 +37,14 @@ namespace Core
                 break;
             }
 
-            int32_t elapsed = clock.restart().asMilliseconds();
+            float elapsed = (float)clock.restart().asMicroseconds() / 1000;
 
             window->PollEvents(this);
 
             window->Clear();
 
-            for (Layer * layer : layerStack) { layer->OnUpdate(elapsed); }
-            for (Layer * layer : layerStack) { layer->OnRender(*window); }
+            for (Layer *layer : layerStack) { layer->OnUpdate(elapsed); }
+            for (Layer *layer : layerStack) { layer->OnRender(*window); }
 
             window->Display();
         }
@@ -62,7 +62,7 @@ namespace Core
         // traverse layers from front to back and send the event to them,
         // if event is handled, do not send the event to other layers, just break the loop
 
-        Layer * layer;
+        Layer *layer;
         for (auto it = layerStack.rbegin(); it != layerStack.rend(); it++)
         {
             layer = *it;
