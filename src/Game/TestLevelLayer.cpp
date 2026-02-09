@@ -37,8 +37,7 @@ namespace Game
 
     TestLevelLayer::~TestLevelLayer()
     {
-        delete character;
-        delete block[6];
+        for (int i = 0; i < entities.size(); i++) { delete entities[i]; }
     }
 
     bool TestLevelLayer::OnEvent(const sf::Event& event)

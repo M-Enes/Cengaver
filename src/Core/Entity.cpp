@@ -11,7 +11,7 @@ namespace Core
         m_sprite.setScale({m_scale, m_scale});
     }
 
-    Entity::~Entity() {};
+    Entity::~Entity() {}
 
     void Entity::OnEvent(const sf::Event& event) {}
 
