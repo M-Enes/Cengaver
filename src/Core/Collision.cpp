@@ -37,22 +37,31 @@ namespace Core
     {
         sf::Vector2f overlap = {0, 0};
 
-        if (obj1->m_velocity.x > 0)
+        if (obj1->m_velocity.x != 0)
         {
-            overlap.x = obj1->m_hitbox.bottomRight.x - obj2->m_hitbox.topLeft.x;
-        }
-        else if (obj1->m_velocity.x < 0)
-        {
-            overlap.x = obj1->m_hitbox.topLeft.x - obj2->m_hitbox.bottomRight.x;
-        }
+            if (obj1->m_velocity.x > 0)
+            {
+                overlap.x = obj1->m_hitbox.bottomRight.x - obj2->m_hitbox.topLeft.x;
+            }
+            else if (obj1->m_velocity.x < 0)
+            {
+                overlap.x = obj1->m_hitbox.topLeft.x - obj2->m_hitbox.bottomRight.x;
+            }
 
-        if (obj1->m_velocity.y > 0)
-        {
-            overlap.y = obj1->m_hitbox.bottomRight.y - obj2->m_hitbox.topLeft.y;
+            obj1->m_velocity.x = 0;
         }
-        else if (obj1->m_velocity.y < 0)
+        else if (obj1->m_velocity.y != 0)
         {
-            overlap.y = obj1->m_hitbox.topLeft.y - obj2->m_hitbox.bottomRight.y;
+            if (obj1->m_velocity.y > 0)
+            {
+                overlap.y = obj1->m_hitbox.bottomRight.y - obj2->m_hitbox.topLeft.y;
+            }
+            else if (obj1->m_velocity.y < 0)
+            {
+                overlap.y = obj1->m_hitbox.topLeft.y - obj2->m_hitbox.bottomRight.y;
+            }
+
+            obj1->m_velocity.y = 0;
         }
 
         if (obj1->m_kineticState == Entity::Dynamic &
@@ -64,12 +73,23 @@ namespace Core
         else if (obj1->m_kineticState == Entity::Dynamic)
         {
             obj1->Move({-overlap.x, -overlap.y});
-            obj1->m_velocity = {0, 0};
         }
         else if (obj2->m_kineticState == Entity::Dynamic)
         {
             obj2->Move({-overlap.x, -overlap.y});
-            obj2->m_velocity = {0, 0};
+        }
+
+        if (obj1->m_hitbox.bottomRight.x <= obj2->m_hitbox.topLeft.x |
+            obj1->m_hitbox.topLeft.x >= obj2->m_hitbox.bottomRight.x)
+        {
+            obj1->m_velocity.x = 0;
+            std::cout << "obj1->m_velocity.x = 0" << std::endl;
+        }
+        if (obj1->m_hitbox.bottomRight.y <= obj2->m_hitbox.topLeft.y |
+            obj1->m_hitbox.topLeft.y >= obj2->m_hitbox.bottomRight.y)
+        {
+            obj1->m_velocity.y = 0;
+            std::cout << "obj1->m_velocity.y = 0" << std::endl;
         }
     }
 } // namespace Core
