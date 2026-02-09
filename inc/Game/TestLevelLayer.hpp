@@ -12,7 +12,7 @@ namespace Game
       public:
         bool debugMode = false;
         Core::Player *character = nullptr;
-        Core::Entity *block = nullptr;
+        Core::Entity *block[6] = {nullptr};
 
       public:
         TestLevelLayer();

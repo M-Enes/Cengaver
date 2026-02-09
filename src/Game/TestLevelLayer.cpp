@@ -8,35 +8,50 @@ namespace Game
 {
     TestLevelLayer::TestLevelLayer()
     {
-        character = new Core::Player({100, 100}, {{8, 9}, {24, 25}}, 6,
+        character = new Core::Player({100, 100}, {{10, 11}, {23, 25}}, 5,
                                      sf::Texture("../../res/images/idle_0.png"));
-        block = new Core::Entity({200, 200}, {{0, 0}, {16, 16}}, 6,
-                                 sf::Texture("../../res/images/castle-tileset.png", false,
-                                             {{16, 16}, {16, 16}}));
+        block[0] = new Core::Entity({200, 200}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
+        block[1] = new Core::Entity({280, 280}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
+        block[2] = new Core::Entity({360, 360}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
+        block[3] = new Core::Entity({440, 440}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
+        block[4] = new Core::Entity({520, 520}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
+        block[5] = new Core::Entity({600, 600}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
         // block->m_kineticState = Core::Entity::Dynamic;
 
         entities.push_back(character);
-        entities.push_back(block);
+        for (int i = 0; i < 6; i++) entities.push_back(block[i]);
     }
 
     TestLevelLayer::~TestLevelLayer()
     {
         delete character;
-        delete block;
+        delete block[6];
     }
 
     bool TestLevelLayer::OnEvent(const sf::Event& event)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F3)) debugMode = !debugMode;
-        block->OnEvent(event);
         character->OnEvent(event);
+        for (int i = 0; i < 6; i++) block[i]->OnEvent(event);
         return false;
     }
 
     void TestLevelLayer::OnUpdate(float dt)
     {
-        block->OnUpdate(dt);
+        for (int i = 0; i < 6; i++) block[i]->OnUpdate(dt);
         character->OnUpdate(dt);
         for (int i = 0; i < entities.size(); i++)
         {
@@ -51,7 +66,7 @@ namespace Game
     {
         sf::RenderWindow& renderWindow = window.GetRenderWindow();
         character->OnRender(renderWindow);
-        block->OnRender(renderWindow);
+        for (int i = 0; i < 6; i++) block[i]->OnRender(renderWindow);
 
         if (debugMode)
         {
@@ -66,16 +81,16 @@ namespace Game
 
             renderWindow.draw(charbox);
 
-            sf::VertexArray blockbox(sf::PrimitiveType::Lines, 5);
-            blockbox[0].position = block->m_hitbox.topLeft;
-            blockbox[1].position = {block->m_hitbox.bottomRight.x,
-                                    block->m_hitbox.topLeft.y};
-            blockbox[2].position = block->m_hitbox.bottomRight;
-            blockbox[3].position = {block->m_hitbox.topLeft.x,
-                                    block->m_hitbox.bottomRight.y};
-            blockbox[4].position = block->m_hitbox.topLeft;
+            // sf::VertexArray blockbox(sf::PrimitiveType::Lines, 5);
+            // blockbox[0].position = block->m_hitbox.topLeft;
+            // blockbox[1].position = {block->m_hitbox.bottomRight.x,
+            //                         block->m_hitbox.topLeft.y};
+            // blockbox[2].position = block->m_hitbox.bottomRight;
+            // blockbox[3].position = {block->m_hitbox.topLeft.x,
+            //                         block->m_hitbox.bottomRight.y};
+            // blockbox[4].position = block->m_hitbox.topLeft;
 
-            renderWindow.draw(blockbox);
+            // renderWindow.draw(blockbox);
         }
     }
 } // namespace Game
