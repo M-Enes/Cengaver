@@ -10,6 +10,7 @@ namespace Game
     class TestLevelLayer : public Core::Layer
     {
       public:
+        bool debugMode = false;
         Core::Player *character = nullptr;
         Core::Entity *block = nullptr;
 

@@ -83,13 +83,11 @@ namespace Core
             obj1->m_hitbox.topLeft.x >= obj2->m_hitbox.bottomRight.x)
         {
             obj1->m_velocity.x = 0;
-            std::cout << "obj1->m_velocity.x = 0" << std::endl;
         }
         if (obj1->m_hitbox.bottomRight.y <= obj2->m_hitbox.topLeft.y |
             obj1->m_hitbox.topLeft.y >= obj2->m_hitbox.bottomRight.y)
         {
             obj1->m_velocity.y = 0;
-            std::cout << "obj1->m_velocity.y = 0" << std::endl;
         }
     }
 } // namespace Core
