@@ -14,6 +14,9 @@ namespace Game
                                              {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
         // block->m_kineticState = Core::Entity::Dynamic;
+
+        entities.push_back(character);
+        entities.push_back(block);
     }
 
     TestLevelLayer::~TestLevelLayer()
@@ -33,7 +36,13 @@ namespace Game
     {
         block->OnUpdate(dt);
         character->OnUpdate(dt);
-        Core::AABB(character, block);
+        for (int i = 0; i < entities.size(); i++)
+        {
+            for (int j = i + 1; j < entities.size(); j++)
+            {
+                Core::AABB(entities[i], entities[j]);
+            }
+        }
     }
 
     void TestLevelLayer::OnRender(Core::Window& window)
