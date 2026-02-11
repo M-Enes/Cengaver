@@ -10,10 +10,6 @@ namespace Game
     class TestLevelLayer : public Core::Layer
     {
       public:
-        bool debugMode = false;
-        Core::Player *character = nullptr;
-        Core::Entity *block[6] = {nullptr};
-
       public:
         TestLevelLayer();
         virtual ~TestLevelLayer();
@@ -23,6 +19,10 @@ namespace Game
         void OnRender(Core::Window& window) override;
 
       private:
+        bool debugMode = false;
+        Core::Player *character = nullptr;
         std::vector<Core::Entity *> entities;
+        static constexpr int blockCount = 6;
+        Core::Entity *block[blockCount];
     };
 } // namespace Game

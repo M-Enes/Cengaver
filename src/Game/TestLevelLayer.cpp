@@ -1,6 +1,9 @@
 #include "Game/TestLevelLayer.hpp"
+#include "Core/Entity.hpp"
 #include "Core/Physics.hpp"
 #include "Core/Player.hpp"
+#include <iostream>
+#include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
@@ -29,10 +32,13 @@ namespace Game
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
-        // block->m_kineticState = Core::Entity::Dynamic;
+        for (int i = 0; i < blockCount; i++)
+        {
+            block[i]->m_kineticState = Core::Entity::Dynamic;
+        }
 
         entities.push_back(character);
-        for (int i = 0; i < 6; i++) entities.push_back(block[i]);
+        for (int i = 0; i < blockCount; i++) entities.push_back(block[i]);
     }
 
     TestLevelLayer::~TestLevelLayer()
@@ -44,13 +50,13 @@ namespace Game
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F3)) debugMode = !debugMode;
         character->OnEvent(event);
-        for (int i = 0; i < 6; i++) block[i]->OnEvent(event);
+        for (int i = 0; i < blockCount; i++) block[i]->OnEvent(event);
         return false;
     }
 
     void TestLevelLayer::OnUpdate(float dt)
     {
-        for (int i = 0; i < 6; i++) block[i]->OnUpdate(dt);
+        for (int i = 0; i < blockCount; i++) block[i]->OnUpdate(dt);
         character->OnUpdate(dt);
         for (int i = 0; i < entities.size(); i++)
         {
@@ -65,31 +71,23 @@ namespace Game
     {
         sf::RenderWindow& renderWindow = window.GetRenderWindow();
         character->OnRender(renderWindow);
-        for (int i = 0; i < 6; i++) block[i]->OnRender(renderWindow);
+        for (int i = 0; i < blockCount; i++) block[i]->OnRender(renderWindow);
 
         if (debugMode)
         {
-            sf::VertexArray charbox(sf::PrimitiveType::LineStrip, 5);
-            charbox[0].position = character->m_hitbox.topLeft;
-            charbox[1].position = {character->m_hitbox.bottomRight.x,
-                                   character->m_hitbox.topLeft.y};
-            charbox[2].position = character->m_hitbox.bottomRight;
-            charbox[3].position = {character->m_hitbox.topLeft.x,
-                                   character->m_hitbox.bottomRight.y};
-            charbox[4].position = character->m_hitbox.topLeft;
-
-            renderWindow.draw(charbox);
-
-            // sf::VertexArray blockbox(sf::PrimitiveType::Lines, 5);
-            // blockbox[0].position = block->m_hitbox.topLeft;
-            // blockbox[1].position = {block->m_hitbox.bottomRight.x,
-            //                         block->m_hitbox.topLeft.y};
-            // blockbox[2].position = block->m_hitbox.bottomRight;
-            // blockbox[3].position = {block->m_hitbox.topLeft.x,
-            //                         block->m_hitbox.bottomRight.y};
-            // blockbox[4].position = block->m_hitbox.topLeft;
-
-            // renderWindow.draw(blockbox);
+            std::vector<sf::VertexArray> entityHitboxes;
+            for (int i = 0; i < entities.size(); i++)
+            {
+                entityHitboxes.emplace_back(sf::PrimitiveType::LineStrip, 5);
+                entityHitboxes[i][0].position = entities[i]->m_hitbox.topLeft;
+                entityHitboxes[i][1].position = {entities[i]->m_hitbox.bottomRight.x,
+                                                 entities[i]->m_hitbox.topLeft.y};
+                entityHitboxes[i][2].position = entities[i]->m_hitbox.bottomRight;
+                entityHitboxes[i][3].position = {entities[i]->m_hitbox.topLeft.x,
+                                                 entities[i]->m_hitbox.bottomRight.y};
+                entityHitboxes[i][4].position = entities[i]->m_hitbox.topLeft;
+                renderWindow.draw(entityHitboxes[i]);
+            }
         }
     }
 } // namespace Game
