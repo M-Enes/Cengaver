@@ -34,7 +34,7 @@ namespace Game
         character->m_kineticState = Core::Entity::Dynamic;
         for (int i = 0; i < blockCount; i++)
         {
-            block[i]->m_kineticState = Core::Entity::Dynamic;
+            block[i]->m_kineticState = Core::Entity::Static;
         }
 
         entities.push_back(character);
