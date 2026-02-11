@@ -53,5 +53,9 @@ namespace Core
         virtual void OnRender(sf::RenderWindow& renderWindow);
 
         virtual void Move(sf::Vector2f dx);
+
+      private:
+        static int idCounter;
+        int m_id = idCounter++;
     };
 } // namespace Core

@@ -2,6 +2,8 @@
 
 namespace Core
 {
+    int Entity::idCounter = 0;
+
     Entity::Entity(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
                    sf::Texture texture)
         : m_position(position), m_scale(scale), m_texture(texture), m_sprite(m_texture)
