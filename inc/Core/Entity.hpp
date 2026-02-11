@@ -11,12 +11,23 @@ namespace Core
     class Entity
     {
       public:
-        bool isAlive = true;
+        struct
+        {
+            sf::Vector2f topLeft;
+            sf::Vector2f bottomRight;
+        } m_hitbox;
+
+        enum
+        {
+            Static,
+            Dynamic
+        } m_kineticState;
+
+        bool m_isAlive = true;
         sf::Vector2f m_position, m_velocity, m_acceleration;
-        sf::Vector2<sf::Vector2f> m_hitbox;
+        float m_scale;
         const sf::Texture m_texture;
         sf::Sprite m_sprite;
-        float m_scale;
         uint8_t m_animationFrame, m_animationOffset;
 
       public:
@@ -26,7 +37,7 @@ namespace Core
         /// \param position Start position
         ///
         /// \param hitbox Hitbox's corners' coordinates relative to top-left corner of the
-        /// texture
+        /// texture you passed
         ///
         /// \param scale Coefficient of the texture
         ///
@@ -41,7 +52,10 @@ namespace Core
         virtual void OnUpdate(float dt);
         virtual void OnRender(sf::RenderWindow& renderWindow);
 
+        virtual void Move(sf::Vector2f dx);
+
       private:
-        void Run();
+        static int idCounter;
+        int m_id = idCounter++;
     };
 } // namespace Core

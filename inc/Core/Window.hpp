@@ -20,7 +20,7 @@ namespace Core
         cause weird behavior */
         bool vsyncEnabled = false;
 
-        bool fullScreen = true;
+        bool fullScreen = false;
     };
 
     class Game;
@@ -38,12 +38,12 @@ namespace Core
         void Clear();
         void Display();
         bool ShouldClose() const;
-        void PollEvents(Game * game);
+        void PollEvents(Game *game);
 
         sf::RenderWindow& GetRenderWindow();
 
       private:
         WindowSpecification specification;
-        sf::RenderWindow * renderWindow = nullptr;
+        sf::RenderWindow *renderWindow = nullptr;
     };
 } // namespace Core
