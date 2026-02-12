@@ -1,11 +1,14 @@
 #include "Core/Player.hpp"
+#include "Core/Animable.hpp"
 #include <SFML/Window/Keyboard.hpp>
 
 namespace Core
 {
     Player::Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-                   sf::Texture texture)
-        : Entity(position, hitbox, scale, texture), m_state(Idle)
+                   sf::Texture texture, std::string animationsPath)
+        : Entity(position, hitbox, scale, texture),
+          m_state(Idle),
+          Animable(animationsPath)
     {}
 
     Player::~Player() {}
@@ -42,6 +45,17 @@ namespace Core
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
     {
+        static int counter = 0;
+        if (counter == 6)
+        {
+            goToNextFrame();
+            counter = 0;
+        }
+        else
+        {
+            counter++;
+        }
+        m_sprite.setTexture(*getCurrentFrame());
         renderWindow.draw(m_sprite);
     }
 

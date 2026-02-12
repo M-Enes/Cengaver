@@ -12,7 +12,8 @@ namespace Game
     TestLevelLayer::TestLevelLayer()
     {
         character = new Core::Player({100, 100}, {{10, 11}, {23, 25}}, 5,
-                                     sf::Texture("../../res/images/idle_0.png"));
+                                     sf::Texture("../../res/images/idle_0.png"),
+                                     "../../res/images/animtest");
         block[0] = new Core::Entity({200, 200}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));

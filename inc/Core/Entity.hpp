@@ -28,7 +28,6 @@ namespace Core
         float m_scale;
         const sf::Texture m_texture;
         sf::Sprite m_sprite;
-        uint8_t m_animationFrame, m_animationOffset;
 
       public:
         ////////////////////////////////////////////////////////////

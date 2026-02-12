@@ -1,15 +1,16 @@
 #pragma once
 
+#include "Core/Animable.hpp"
 #include "Core/Entity.hpp"
 
 namespace Core
 {
-    class Player : public Entity
+    class Player : public Entity, public Animable
     {
 
       public:
         Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-               sf::Texture texture);
+               sf::Texture texture, std::string animationsPath);
         ~Player();
 
         void OnEvent(const sf::Event& Event) override;
