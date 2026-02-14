@@ -19,8 +19,11 @@ namespace Core
 
     void Entity::OnUpdate(float dt)
     {
-        m_velocity += m_acceleration * dt;
-        Move(m_velocity * dt);
+        if (this->m_kineticState != Static)
+        {
+            m_velocity += m_acceleration * dt;
+            Move(m_velocity * dt);
+        }
     }
 
     void Entity::OnRender(sf::RenderWindow& renderWindow)

@@ -13,29 +13,26 @@ namespace Game
     {
         character = new Core::Player({100, 100}, {{10, 11}, {23, 25}}, 5,
                                      sf::Texture("../../res/images/idle_0.png"));
-        block[0] = new Core::Entity({200, 200}, {{0, 0}, {16, 16}}, 5,
+        block[0] = new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
-        block[1] = new Core::Entity({280, 280}, {{0, 0}, {16, 16}}, 5,
+        block[1] = new Core::Entity({280, 520}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
-        block[2] = new Core::Entity({360, 360}, {{0, 0}, {16, 16}}, 5,
+        block[2] = new Core::Entity({360, 520}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
-        block[3] = new Core::Entity({440, 440}, {{0, 0}, {16, 16}}, 5,
+        block[3] = new Core::Entity({440, 520}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
         block[4] = new Core::Entity({520, 520}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
-        block[5] = new Core::Entity({600, 600}, {{0, 0}, {16, 16}}, 5,
+        block[5] = new Core::Entity({600, 520}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
-        for (int i = 0; i < blockCount; i++)
-        {
-            block[i]->m_kineticState = Core::Entity::Static;
-        }
+        block[3]->m_kineticState = Core::Entity::Dynamic;
 
         entities.push_back(character);
         for (int i = 0; i < blockCount; i++) entities.push_back(block[i]);

@@ -32,11 +32,7 @@ namespace Core
     void Player::OnUpdate(float dt)
     {
         m_velocity += m_acceleration * dt;
-        sf::Vector2f dx = m_velocity * dt;
-        m_position += dx;
-        m_hitbox.topLeft += dx;
-        m_hitbox.bottomRight += dx;
-        m_sprite.setPosition(m_position);
+        Move(m_velocity * dt);
         inputProcessed = true;
     }
 
