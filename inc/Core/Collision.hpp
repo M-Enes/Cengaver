@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Entity.hpp"
+#include <SFML/System/Vector2.hpp>
 
 namespace Core
 {
@@ -11,8 +12,12 @@ namespace Core
         AABB(Core::Entity *object1, Core::Entity *object2);
 
       private:
-        bool Check(float distances[4]);
-        void Effect(Core::Entity *obj1, Core::Entity *obj2);
+        Core::Entity *m_obj1;
+        Core::Entity *m_obj2;
+        float m_distances[4];
+        sf::Vector2f m_overlap = {0, 0};
+        bool Check();
+        void Effect();
     };
 
     // Seperating Axis Theorem

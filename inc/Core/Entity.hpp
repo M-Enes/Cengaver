@@ -15,7 +15,7 @@ namespace Core
         {
             sf::Vector2f topLeft;
             sf::Vector2f bottomRight;
-        } m_hitbox;
+        } m_hitbox, m_previousHitbox;
 
         enum
         {
