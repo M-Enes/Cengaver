@@ -48,19 +48,16 @@ namespace Game
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F3)) debugMode = !debugMode;
         character->OnEvent(event);
         for (int i = 0; i < blockCount; i++) block[i]->OnEvent(event);
-        return false;
+        return true;
     }
 
     void TestLevelLayer::OnUpdate(float dt)
     {
         for (int i = 0; i < blockCount; i++) block[i]->OnUpdate(dt);
         character->OnUpdate(dt);
-        for (int i = 0; i < entities.size(); i++)
+        for (int i = 1; i < entities.size(); i++)
         {
-            for (int j = i + 1; j < entities.size(); j++)
-            {
-                Core::AABB(entities[i], entities[j]);
-            }
+            Core::AABB(entities[0], entities[i]);
         }
     }
 

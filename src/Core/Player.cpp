@@ -1,4 +1,5 @@
 #include "Core/Player.hpp"
+#include "Core/Entity.hpp"
 #include <iostream>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -69,19 +70,13 @@ namespace Core
         else
             m_acceleration.y = 0;
 
-        m_velocity += m_acceleration * dt;
-        Move(m_velocity * dt);
+        Entity::OnUpdate(dt);
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
     { renderWindow.draw(m_sprite); }
 
     void Player::Move(sf::Vector2f dx)
-    {
-        m_position += dx;
-        m_hitbox.topLeft += dx;
-        m_hitbox.bottomRight += dx;
-        m_sprite.move(dx);
-    }
+    { Entity::Move(dx); }
 
 } // namespace Core
