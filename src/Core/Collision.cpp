@@ -48,7 +48,8 @@ namespace Core
                 overlap.x = obj1->m_hitbox.topLeft.x - obj2->m_hitbox.bottomRight.x;
             }
         }
-        else if (obj1->m_velocity.y != 0)
+
+        if (obj1->m_velocity.y != 0)
         {
             if (obj1->m_velocity.y > 0)
             {
