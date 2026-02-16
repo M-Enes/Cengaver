@@ -31,6 +31,24 @@ namespace Core
             Loss
         } m_state;
 
-        bool inputProcessed = true;
+        enum class HorizontalMovement
+        {
+            None,
+            Right,
+            Left
+        };
+
+        enum class VerticalMovement
+        {
+            None,
+            Up,
+            Down
+        };
+
+        struct
+        {
+            HorizontalMovement horizontal;
+            VerticalMovement vertical;
+        } m_movRequest;
     };
 } // namespace Core

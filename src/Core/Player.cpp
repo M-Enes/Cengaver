@@ -1,4 +1,6 @@
 #include "Core/Player.hpp"
+#include <iostream>
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace Core
@@ -10,36 +12,69 @@ namespace Core
 
     Player::~Player() {}
 
-    void Player::OnEvent(const sf::Event& Event)
+    void Player::OnEvent(const sf::Event& event)
     {
-        if (inputProcessed)
+        if (const auto *keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-                m_velocity = {0, -0.5f};
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-                m_velocity = {-0.5f, 0};
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-                m_velocity = {0, 0.5f};
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-                m_velocity = {0.5f, 0};
-            else
-                m_velocity = {0, 0};
-
-            inputProcessed = false;
+            if (keyPressed->scancode == sf::Keyboard::Scancode::A)
+            {
+                m_movRequest.horizontal = HorizontalMovement::Left;
+            }
+            else if (keyPressed->scancode == sf::Keyboard::Scancode::D)
+            {
+                m_movRequest.horizontal = HorizontalMovement::Right;
+            }
+            else if (keyPressed->scancode == sf::Keyboard::Scancode::W)
+            {
+                m_movRequest.vertical = VerticalMovement::Up;
+            }
+            else if (keyPressed->scancode == sf::Keyboard::Scancode::S)
+            {
+                m_movRequest.vertical = VerticalMovement::Down;
+            }
+        }
+        else if (const auto *keyReleased = event.getIf<sf::Event::KeyReleased>())
+        {
+            if (keyReleased->scancode == sf::Keyboard::Scancode::A)
+            {
+                m_movRequest.horizontal = HorizontalMovement::None;
+            }
+            else if (keyReleased->scancode == sf::Keyboard::Scancode::D)
+            {
+                m_movRequest.horizontal = HorizontalMovement::None;
+            }
+            else if (keyReleased->scancode == sf::Keyboard::Scancode::W)
+            {
+                m_movRequest.vertical = VerticalMovement::None;
+            }
+            else if (keyReleased->scancode == sf::Keyboard::Scancode::S)
+            {
+                m_movRequest.vertical = VerticalMovement::None;
+            }
         }
     }
 
     void Player::OnUpdate(float dt)
     {
+        if (m_movRequest.horizontal == HorizontalMovement::Right)
+            m_acceleration.x = 0.0001;
+        else if (m_movRequest.horizontal == HorizontalMovement::Left)
+            m_acceleration.x = -0.0001;
+        else
+            m_acceleration.x = 0;
+        if (m_movRequest.vertical == VerticalMovement::Up)
+            m_acceleration.y = -0.0001;
+        else if (m_movRequest.vertical == VerticalMovement::Down)
+            m_acceleration.y = 0.0001;
+        else
+            m_acceleration.y = 0;
+
         m_velocity += m_acceleration * dt;
         Move(m_velocity * dt);
-        inputProcessed = true;
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
-    {
-        renderWindow.draw(m_sprite);
-    }
+    { renderWindow.draw(m_sprite); }
 
     void Player::Move(sf::Vector2f dx)
     {

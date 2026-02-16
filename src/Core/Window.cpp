@@ -27,6 +27,7 @@ namespace Core
 
         renderWindow->setVerticalSyncEnabled(specification.vsyncEnabled);
         renderWindow->setFramerateLimit(specification.fpsLimit);
+        renderWindow->setKeyRepeatEnabled(specification.keyRepeat);
     }
 
     void Window::Destroy()
@@ -46,7 +47,7 @@ namespace Core
         return !renderWindow->isOpen();
     }
 
-    void Window::PollEvents(Game * game)
+    void Window::PollEvents(Game *game)
     {
         while (const std::optional event = renderWindow->pollEvent())
         {
