@@ -33,18 +33,6 @@ namespace Core
 
     void AABB::Effect()
     {
-        std::cout << "---\n"
-                  << m_distances[0] << ", " << m_distances[1] << ", " << m_distances[2]
-                  << ", " << m_distances[3] << std::endl;
-        std::cout << "(" << m_obj1->m_hitbox.topLeft.x << ", "
-                  << m_obj1->m_hitbox.topLeft.y << "), "
-                  << "(" << m_obj1->m_hitbox.bottomRight.x << ", "
-                  << m_obj1->m_hitbox.bottomRight.y << ")" << std::endl;
-        std::cout << "(" << m_obj1->m_previousHitbox.topLeft.x << ", "
-                  << m_obj1->m_previousHitbox.topLeft.y << "), "
-                  << "(" << m_obj1->m_previousHitbox.bottomRight.x << ", "
-                  << m_obj1->m_previousHitbox.bottomRight.y << ")" << std::endl;
-
         if (m_obj1->m_previousHitbox.bottomRight.x <= m_obj2->m_hitbox.topLeft.x)
         {
             std::cout << "Here dist[0]" << std::endl;
@@ -55,14 +43,14 @@ namespace Core
         if (m_obj1->m_previousHitbox.topLeft.x >= m_obj2->m_hitbox.bottomRight.x)
         {
             std::cout << "Here dist[1]" << std::endl;
-            m_overlap.x = m_distances[1];
+            m_overlap.x = -m_distances[1];
             m_obj1->m_velocity.x = 0;
             m_obj1->m_acceleration.x = 0;
         }
         if (m_obj1->m_previousHitbox.bottomRight.y <= m_obj2->m_hitbox.topLeft.y)
         {
             std::cout << "Here dist[2]" << std::endl;
-            m_overlap.y = -m_distances[2];
+            m_overlap.y = m_distances[2];
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
         }
@@ -73,8 +61,6 @@ namespace Core
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
         }
-
-        std::cout << m_overlap.x << ", " << m_overlap.y << std::endl;
 
         if (m_obj1->m_kineticState == Entity::Dynamic &&
             m_obj2->m_kineticState == Entity::Dynamic)
@@ -91,9 +77,5 @@ namespace Core
             m_obj2->Move({-m_overlap.x, -m_overlap.y});
         }
         m_obj1->m_previousHitbox = m_obj1->m_hitbox;
-        std::cout << "(" << m_obj1->m_hitbox.topLeft.x << ", "
-                  << m_obj1->m_hitbox.topLeft.y << "), "
-                  << "(" << m_obj1->m_hitbox.bottomRight.x << ", "
-                  << m_obj1->m_hitbox.bottomRight.y << ")" << std::endl;
     }
 } // namespace Core
