@@ -35,28 +35,24 @@ namespace Core
     {
         if (m_obj1->m_previousHitbox.bottomRight.x <= m_obj2->m_hitbox.topLeft.x)
         {
-            std::cout << "Here dist[0]" << std::endl;
             m_overlap.x = m_distances[0];
             m_obj1->m_velocity.x = 0;
             m_obj1->m_acceleration.x = 0;
         }
         if (m_obj1->m_previousHitbox.topLeft.x >= m_obj2->m_hitbox.bottomRight.x)
         {
-            std::cout << "Here dist[1]" << std::endl;
             m_overlap.x = -m_distances[1];
             m_obj1->m_velocity.x = 0;
             m_obj1->m_acceleration.x = 0;
         }
         if (m_obj1->m_previousHitbox.bottomRight.y <= m_obj2->m_hitbox.topLeft.y)
         {
-            std::cout << "Here dist[2]" << std::endl;
             m_overlap.y = m_distances[2];
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
         }
         if (m_obj1->m_previousHitbox.topLeft.y >= m_obj2->m_hitbox.bottomRight.y)
         {
-            std::cout << "Here dist[3]" << std::endl;
             m_overlap.y = -m_distances[3];
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
