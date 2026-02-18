@@ -31,8 +31,17 @@ namespace Game
         block[5] = new Core::Entity({600, 520}, {{0, 0}, {16, 16}}, 5,
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
+        block[6] = new Core::Entity({600, 440}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
+        block[7] = new Core::Entity({200, 440}, {{0, 0}, {16, 16}}, 5,
+                                    sf::Texture("../../res/images/castle-tileset.png",
+                                                false, {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
-        block[3]->m_kineticState = Core::Entity::Dynamic;
+
+        for (int i = 0; i < blockCount; i++)
+            std::cout << block[i]->m_kineticState << "\n";
+        std::cout << character->m_kineticState << "\n";
 
         entities.push_back(character);
         for (int i = 0; i < blockCount; i++) entities.push_back(block[i]);

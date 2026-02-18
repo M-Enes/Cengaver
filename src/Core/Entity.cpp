@@ -6,7 +6,11 @@ namespace Core
 
     Entity::Entity(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
                    sf::Texture texture)
-        : m_position(position), m_scale(scale), m_texture(texture), m_sprite(m_texture)
+        : m_kineticState(Static),
+          m_position(position),
+          m_scale(scale),
+          m_texture(texture),
+          m_sprite(m_texture)
     {
         m_hitbox = {m_position + m_scale * hitbox.x, m_position + m_scale * hitbox.y};
         m_previousHitbox = {{0, 0}, {0, 0}};
