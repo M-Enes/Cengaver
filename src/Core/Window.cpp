@@ -1,11 +1,6 @@
 #include "Core/Window.hpp"
 #include "Core/Game.hpp"
 #include <optional>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/ContextSettings.hpp>
-#include <SFML/Window/Event.hpp>
-#include <SFML/Window/VideoMode.hpp>
-#include <SFML/Window/WindowEnums.hpp>
 
 namespace Core
 {
@@ -14,9 +9,7 @@ namespace Core
     {}
 
     Window::~Window()
-    {
-        Destroy();
-    }
+    { Destroy(); }
 
     void Window::Create()
     {
@@ -38,14 +31,10 @@ namespace Core
     }
 
     void Window::Close()
-    {
-        renderWindow->close();
-    }
+    { renderWindow->close(); }
 
     bool Window::ShouldClose() const
-    {
-        return !renderWindow->isOpen();
-    }
+    { return !renderWindow->isOpen(); }
 
     void Window::PollEvents(Game *game)
     {
@@ -56,19 +45,13 @@ namespace Core
     }
 
     void Window::Clear()
-    {
-        renderWindow->clear();
-    }
+    { renderWindow->clear(); }
 
     void Window::Display()
-    {
-        renderWindow->display();
-    }
+    { renderWindow->display(); }
 
     /* Do not call before Create() or after Destroy() */
     sf::RenderWindow& Window::GetRenderWindow()
-    {
-        return *renderWindow;
-    }
+    { return *renderWindow; }
 
 } // namespace Core

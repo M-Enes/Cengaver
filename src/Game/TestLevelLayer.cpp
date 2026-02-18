@@ -1,11 +1,5 @@
 #include "Game/TestLevelLayer.hpp"
-#include "Core/Entity.hpp"
 #include "Core/Physics.hpp"
-#include "Core/Player.hpp"
-#include <iostream>
-#include <SFML/Graphics/PrimitiveType.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
-#include <SFML/Window/Keyboard.hpp>
 
 namespace Game
 {
@@ -38,10 +32,6 @@ namespace Game
                                     sf::Texture("../../res/images/castle-tileset.png",
                                                 false, {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
-
-        for (int i = 0; i < blockCount; i++)
-            std::cout << block[i]->m_kineticState << "\n";
-        std::cout << character->m_kineticState << "\n";
 
         entities.push_back(character);
         for (int i = 0; i < blockCount; i++) entities.push_back(block[i]);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/Entity.hpp"
-#include <SFML/System/Vector2.hpp>
 
 namespace Core
 {

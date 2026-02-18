@@ -1,7 +1,4 @@
 #include "Core/Player.hpp"
-#include "Core/Entity.hpp"
-#include <iostream>
-#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace Core
