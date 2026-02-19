@@ -18,10 +18,4 @@ namespace Core
         bool Check();
         void Effect();
     };
-
-    // Seperating Axis Theorem
-    // class SAT
-    // {
-    //     static bool Check(Core::Entity& entity1, Core::Entity& entity2);
-    // };
 } // namespace Core

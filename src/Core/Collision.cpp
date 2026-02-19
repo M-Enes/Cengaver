@@ -18,8 +18,6 @@ namespace Core
         if (m_distances[0] > 0 && m_distances[1] > 0 && m_distances[2] > 0 &&
             m_distances[3] > 0)
         {
-            // m_overlap = {min(m_distances[0], m_distances[1]),
-            //              min(m_distances[2], m_distances[3])};
             return true;
         }
         else
@@ -56,6 +54,5 @@ namespace Core
         }
 
         m_obj1->Move({-m_overlap.x, -m_overlap.y});
-        m_obj1->m_previousHitbox = m_obj1->m_hitbox;
     }
 } // namespace Core
