@@ -56,6 +56,5 @@ namespace Core
         }
 
         m_obj1->Move({-m_overlap.x, -m_overlap.y});
-        m_obj1->m_previousHitbox = m_obj1->m_hitbox;
     }
 } // namespace Core
