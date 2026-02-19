@@ -31,24 +31,12 @@ namespace Core
             Loss
         } m_state;
 
-        enum class HorizontalMovement
-        {
-            None,
-            Right,
-            Left
-        };
-
-        enum class VerticalMovement
-        {
-            None,
-            Up,
-            Down
-        };
-
         struct
         {
-            HorizontalMovement horizontal;
-            VerticalMovement vertical;
-        } m_movRequest;
+            uint16_t isAPressed = 0;
+            uint16_t isDPressed = 0;
+            uint16_t isWPressed = 0;
+            uint16_t isSPressed = 0;
+        } m_input;
     };
 } // namespace Core

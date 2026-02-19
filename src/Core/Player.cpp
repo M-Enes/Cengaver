@@ -1,4 +1,5 @@
 #include "Core/Player.hpp"
+#include <cstdint>
 #include <SFML/Window/Keyboard.hpp>
 
 namespace Core
@@ -16,56 +17,62 @@ namespace Core
         {
             if (keyPressed->scancode == sf::Keyboard::Scancode::A)
             {
-                m_movRequest.horizontal = HorizontalMovement::Left;
+                m_input.isAPressed = UINT16_MAX;
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::D)
             {
-                m_movRequest.horizontal = HorizontalMovement::Right;
+                m_input.isDPressed = UINT16_MAX;
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::W)
             {
-                m_movRequest.vertical = VerticalMovement::Up;
+                m_input.isWPressed = UINT16_MAX;
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::S)
             {
-                m_movRequest.vertical = VerticalMovement::Down;
+                m_input.isSPressed = UINT16_MAX;
             }
         }
         else if (const auto *keyReleased = event.getIf<sf::Event::KeyReleased>())
         {
             if (keyReleased->scancode == sf::Keyboard::Scancode::A)
             {
-                m_movRequest.horizontal = HorizontalMovement::None;
+                m_input.isAPressed = 0;
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::D)
             {
-                m_movRequest.horizontal = HorizontalMovement::None;
+                m_input.isDPressed = 0;
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::W)
             {
-                m_movRequest.vertical = VerticalMovement::None;
+                m_input.isWPressed = 0;
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::S)
             {
-                m_movRequest.vertical = VerticalMovement::None;
+                m_input.isSPressed = 0;
             }
         }
     }
 
     void Player::OnUpdate(float dt)
     {
-        if (m_movRequest.horizontal == HorizontalMovement::Right)
+        if (m_input.isAPressed < m_input.isDPressed)
             m_acceleration.x = 0.0001;
-        else if (m_movRequest.horizontal == HorizontalMovement::Left)
+        else if (m_input.isAPressed > m_input.isDPressed)
             m_acceleration.x = -0.0001;
         else
             m_acceleration.x = 0;
-        if (m_movRequest.vertical == VerticalMovement::Up)
+
+        if (m_input.isSPressed < m_input.isWPressed)
             m_acceleration.y = -0.0001;
-        else if (m_movRequest.vertical == VerticalMovement::Down)
+        else if (m_input.isSPressed > m_input.isWPressed)
             m_acceleration.y = 0.0001;
         else
             m_acceleration.y = 0;
+
+        if (m_input.isAPressed) m_input.isAPressed -= 1;
+        if (m_input.isDPressed) m_input.isDPressed -= 1;
+        if (m_input.isWPressed) m_input.isWPressed -= 1;
+        if (m_input.isSPressed) m_input.isSPressed -= 1;
 
         Entity::OnUpdate(dt);
     }
