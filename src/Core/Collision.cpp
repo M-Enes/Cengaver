@@ -18,8 +18,6 @@ namespace Core
         if (m_distances[0] > 0 && m_distances[1] > 0 && m_distances[2] > 0 &&
             m_distances[3] > 0)
         {
-            // m_overlap = {min(m_distances[0], m_distances[1]),
-            //              min(m_distances[2], m_distances[3])};
             return true;
         }
         else
