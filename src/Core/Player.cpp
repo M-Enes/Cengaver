@@ -1,6 +1,8 @@
 #include "Core/Player.hpp"
+// #include "Core/log.hpp"
 #include <cstdint>
 #include <SFML/Window/Keyboard.hpp>
+#include <string>
 
 namespace Core
 {
@@ -55,17 +57,19 @@ namespace Core
 
     void Player::OnUpdate(float dt)
     {
+        m_previousHitbox = m_hitbox;
+
         if (m_input.isAPressed < m_input.isDPressed)
-            m_acceleration.x = 0.0001;
+            m_acceleration.x = 0.002;
         else if (m_input.isAPressed > m_input.isDPressed)
-            m_acceleration.x = -0.0001;
+            m_acceleration.x = -0.002;
         else
             m_acceleration.x = 0;
 
         if (m_input.isSPressed < m_input.isWPressed)
-            m_acceleration.y = -0.0001;
+            m_acceleration.y = -0.002;
         else if (m_input.isSPressed > m_input.isWPressed)
-            m_acceleration.y = 0.0001;
+            m_acceleration.y = 0.002;
         else
             m_acceleration.y = 0;
 
@@ -74,7 +78,19 @@ namespace Core
         if (m_input.isWPressed) m_input.isWPressed -= 1;
         if (m_input.isSPressed) m_input.isSPressed -= 1;
 
-        Entity::OnUpdate(dt);
+        m_velocity += m_acceleration * dt;
+
+        if (m_velocity.x > MaxSpeed) { m_velocity.x = MaxSpeed; }
+        else if (m_velocity.x < -MaxSpeed) { m_velocity.x = -MaxSpeed; }
+        if (m_velocity.y > MaxSpeed) { m_velocity.y = MaxSpeed; }
+        else if (m_velocity.y < -MaxSpeed) { m_velocity.y = -MaxSpeed; }
+
+        Move(m_velocity * dt);
+
+        // logger.info(std::to_string(m_velocity.x) + ", " +
+        // std::to_string(m_velocity.y)); logger.info(std::to_string(m_acceleration.x) +
+        // ", " +
+        //             std::to_string(m_acceleration.y));
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)

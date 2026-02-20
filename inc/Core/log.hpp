@@ -39,41 +39,39 @@ namespace Core
         }
 
         ~Log()
-        {
-            fout.close();
-        }
+        { fout.close(); }
 
-        void trace(const std::string& s)
+        void trace(const std::string s)
         {
             if (level <= Trace) fout << time_stamp() << " [Trace]: " << s << '\n';
             fout.flush();
         }
 
-        void debug(const std::string& s)
+        void debug(const std::string s)
         {
             if (level <= Debug) fout << time_stamp() << " [Debug]: " << s << '\n';
             fout.flush();
         }
 
-        void info(const std::string& s)
+        void info(const std::string s)
         {
             if (level <= Info) fout << time_stamp() << " [Info]: " << s << '\n';
             fout.flush();
         }
 
-        void warn(const std::string& s)
+        void warn(const std::string s)
         {
             if (level <= Warn) fout << time_stamp() << " [Warn]: " << s << '\n';
             fout.flush();
         }
 
-        void error(const std::string& s)
+        void error(const std::string s)
         {
             if (level <= Error) fout << time_stamp() << " [Error]: " << s << '\n';
             fout.flush();
         }
 
-        void fatal(const std::string& s)
+        void fatal(const std::string s)
         {
             if (level <= Fatal) fout << time_stamp() << " [Fatal]: " << s << '\n';
             fout.flush();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/Collision.hpp"
 #include "Core/Entity.hpp"
 
 namespace Core
@@ -19,6 +20,8 @@ namespace Core
         void Move(sf::Vector2f dx) override;
 
       private:
+        const float MaxSpeed = 0.1;
+
         enum
         {
             Idle,
