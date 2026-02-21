@@ -1,5 +1,5 @@
 #include "Core/Player.hpp"
-// #include "Core/log.hpp"
+#include "Core/log.hpp"
 #include <cstdint>
 #include <SFML/Window/Keyboard.hpp>
 #include <string>
@@ -20,10 +20,12 @@ namespace Core
             if (keyPressed->scancode == sf::Keyboard::Scancode::A)
             {
                 m_input.isAPressed = UINT16_MAX;
+                logger.info("Pressed A");
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::D)
             {
                 m_input.isDPressed = UINT16_MAX;
+                logger.info("Pressed D");
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::W)
             {
@@ -39,10 +41,12 @@ namespace Core
             if (keyReleased->scancode == sf::Keyboard::Scancode::A)
             {
                 m_input.isAPressed = 0;
+                logger.info("Released A");
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::D)
             {
                 m_input.isDPressed = 0;
+                logger.info("Released D");
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::W)
             {
@@ -64,7 +68,15 @@ namespace Core
         else if (m_input.isAPressed > m_input.isDPressed)
             m_acceleration.x = -0.002;
         else
-            m_acceleration.x = 0;
+        {
+            if (m_velocity.x < 0.005 && m_velocity.x > -0.005) m_velocity.x = 0;
+            if (m_velocity.x > 0)
+                m_acceleration.x = -0.001;
+            else if (m_velocity.x < 0)
+                m_acceleration.x = 0.001;
+            else
+                m_acceleration.x = 0;
+        }
 
         if (m_input.isSPressed < m_input.isWPressed)
             m_acceleration.y = -0.002;
@@ -87,10 +99,7 @@ namespace Core
 
         Move(m_velocity * dt);
 
-        // logger.info(std::to_string(m_velocity.x) + ", " +
-        // std::to_string(m_velocity.y)); logger.info(std::to_string(m_acceleration.x) +
-        // ", " +
-        //             std::to_string(m_acceleration.y));
+        logger.info(std::to_string(m_velocity.x) + ", " + std::to_string(m_velocity.y));
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)

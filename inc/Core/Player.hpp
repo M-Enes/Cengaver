@@ -20,7 +20,7 @@ namespace Core
         void Move(sf::Vector2f dx) override;
 
       private:
-        const float MaxSpeed = 0.1;
+        const float MaxSpeed = 0.4;
 
         enum
         {
