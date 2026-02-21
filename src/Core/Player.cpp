@@ -64,9 +64,19 @@ namespace Core
         m_previousHitbox = m_hitbox;
 
         if (m_input.isAPressed < m_input.isDPressed)
-            m_acceleration.x = 0.002;
+        {
+            if (m_velocity.x < 0)
+                m_acceleration.x = 0.010;
+            else
+                m_acceleration.x = 0.002;
+        }
         else if (m_input.isAPressed > m_input.isDPressed)
-            m_acceleration.x = -0.002;
+        {
+            if (m_velocity.x > 0)
+                m_acceleration.x = -0.010;
+            else
+                m_acceleration.x = -0.002;
+        }
         else
         {
             if (m_velocity.x < 0.005 && m_velocity.x > -0.005) m_velocity.x = 0;
