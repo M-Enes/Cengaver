@@ -11,24 +11,24 @@ namespace Core
     class Entity
     {
       public:
+        bool m_isAlive = true;
+        sf::Vector2f m_position, m_velocity, m_acceleration;
+        sf::Vector2f m_gravity = {0, 0.0019};
+        float m_scale;
+        const sf::Texture m_texture;
+        sf::Sprite m_sprite;
+        uint8_t m_animationFrame, m_animationOffset;
         struct
         {
             sf::Vector2f topLeft;
             sf::Vector2f bottomRight;
         } m_hitbox, m_previousHitbox;
 
-        enum
+        enum KineticState
         {
             Static,
             Dynamic
         } m_kineticState;
-
-        bool m_isAlive = true;
-        sf::Vector2f m_position, m_velocity, m_acceleration;
-        float m_scale;
-        const sf::Texture m_texture;
-        sf::Sprite m_sprite;
-        uint8_t m_animationFrame, m_animationOffset;
 
       public:
         ////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ namespace Core
         ///
         ////////////////////////////////////////////////////////////
         Entity(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-               sf::Texture texture);
+               KineticState kineticState, sf::Texture texture);
         virtual ~Entity();
 
         virtual void OnEvent(const sf::Event& Event);

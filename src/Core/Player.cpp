@@ -7,8 +7,8 @@
 namespace Core
 {
     Player::Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-                   sf::Texture texture)
-        : Entity(position, hitbox, scale, texture), m_state(Idle)
+                   KineticState kineticState, sf::Texture texture)
+        : Entity(position, hitbox, scale, kineticState, texture), m_state(Idle)
     {}
 
     Player::~Player() {}
@@ -20,20 +20,20 @@ namespace Core
             if (keyPressed->scancode == sf::Keyboard::Scancode::A)
             {
                 m_input.isAPressed = UINT16_MAX;
-                logger.info("Pressed A");
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::D)
             {
                 m_input.isDPressed = UINT16_MAX;
-                logger.info("Pressed D");
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::W)
             {
                 m_input.isWPressed = UINT16_MAX;
+                logger.info("Pressed W");
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::S)
             {
                 m_input.isSPressed = UINT16_MAX;
+                logger.info("Pressed S");
             }
         }
         else if (const auto *keyReleased = event.getIf<sf::Event::KeyReleased>())
@@ -41,20 +41,20 @@ namespace Core
             if (keyReleased->scancode == sf::Keyboard::Scancode::A)
             {
                 m_input.isAPressed = 0;
-                logger.info("Released A");
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::D)
             {
                 m_input.isDPressed = 0;
-                logger.info("Released D");
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::W)
             {
                 m_input.isWPressed = 0;
+                logger.info("Released W");
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::S)
             {
                 m_input.isSPressed = 0;
+                logger.info("Released S");
             }
         }
     }
@@ -100,7 +100,7 @@ namespace Core
         if (m_input.isWPressed) m_input.isWPressed -= 1;
         if (m_input.isSPressed) m_input.isSPressed -= 1;
 
-        m_velocity += m_acceleration * dt;
+        m_velocity += (m_acceleration + m_gravity) * dt;
 
         if (m_velocity.x > MaxSpeed) { m_velocity.x = MaxSpeed; }
         else if (m_velocity.x < -MaxSpeed) { m_velocity.x = -MaxSpeed; }
@@ -113,9 +113,13 @@ namespace Core
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
-    { renderWindow.draw(m_sprite); }
+    {
+        renderWindow.draw(m_sprite);
+    }
 
     void Player::Move(sf::Vector2f dx)
-    { Entity::Move(dx); }
+    {
+        Entity::Move(dx);
+    }
 
 } // namespace Core

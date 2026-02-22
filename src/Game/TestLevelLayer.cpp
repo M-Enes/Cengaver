@@ -1,36 +1,46 @@
 #include "Game/TestLevelLayer.hpp"
+#include "Core/Entity.hpp"
 #include "Core/Physics.hpp"
 
 namespace Game
 {
     TestLevelLayer::TestLevelLayer()
     {
-        character = new Core::Player({100, 100}, {{10, 11}, {23, 25}}, 5,
-                                     sf::Texture("../../res/images/idle_0.png"));
-        block[0] = new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
-        block[1] = new Core::Entity({280, 520}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
-        block[2] = new Core::Entity({360, 520}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
-        block[3] = new Core::Entity({440, 520}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
-        block[4] = new Core::Entity({520, 520}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
-        block[5] = new Core::Entity({600, 520}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
-        block[6] = new Core::Entity({600, 440}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
-        block[7] = new Core::Entity({200, 440}, {{0, 0}, {16, 16}}, 5,
-                                    sf::Texture("../../res/images/castle-tileset.png",
-                                                false, {{16, 16}, {16, 16}}));
+        character =
+            new Core::Player({100, 100}, {{10, 11}, {23, 25}}, 5, Core::Entity::Dynamic,
+                             sf::Texture("../../res/images/idle_0.png"));
+        block[0] =
+            new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[1] =
+            new Core::Entity({280, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[2] =
+            new Core::Entity({360, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[3] =
+            new Core::Entity({440, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[4] =
+            new Core::Entity({520, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[5] =
+            new Core::Entity({600, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[6] =
+            new Core::Entity({600, 440}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[7] =
+            new Core::Entity({200, 440}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
 
         entities.push_back(character);

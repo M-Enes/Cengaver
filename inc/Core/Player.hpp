@@ -10,7 +10,7 @@ namespace Core
 
       public:
         Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-               sf::Texture texture);
+               KineticState kineticState, sf::Texture texture);
         ~Player();
 
         void OnEvent(const sf::Event& Event) override;
