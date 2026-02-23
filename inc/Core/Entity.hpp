@@ -13,7 +13,7 @@ namespace Core
       public:
         bool m_isAlive = true;
         sf::Vector2f m_position, m_velocity, m_acceleration;
-        sf::Vector2f m_gravity = {0, 0.0019};
+        sf::Vector2f m_gravity = {0, 0.001};
         float m_scale;
         const sf::Texture m_texture;
         sf::Sprite m_sprite;

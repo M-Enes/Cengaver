@@ -20,37 +20,34 @@ namespace Core
         {
             return true;
         }
-        else
-        {
-            return false;
-        }
+        else { return false; }
     }
 
     void AABB::Effect()
     {
-        if (m_obj1->m_previousHitbox.bottomRight.x <= m_obj2->m_hitbox.topLeft.x)
-        {
-            m_overlap.x = m_distances[0];
-            m_obj1->m_velocity.x = 0;
-            m_obj1->m_acceleration.x = 0;
-        }
-        if (m_obj1->m_previousHitbox.topLeft.x >= m_obj2->m_hitbox.bottomRight.x)
-        {
-            m_overlap.x = -m_distances[1];
-            m_obj1->m_velocity.x = 0;
-            m_obj1->m_acceleration.x = 0;
-        }
         if (m_obj1->m_previousHitbox.bottomRight.y <= m_obj2->m_hitbox.topLeft.y)
         {
             m_overlap.y = m_distances[2];
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
         }
-        if (m_obj1->m_previousHitbox.topLeft.y >= m_obj2->m_hitbox.bottomRight.y)
+        else if (m_obj1->m_previousHitbox.topLeft.y >= m_obj2->m_hitbox.bottomRight.y)
         {
             m_overlap.y = -m_distances[3];
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
+        }
+        else if (m_obj1->m_previousHitbox.bottomRight.x <= m_obj2->m_hitbox.topLeft.x)
+        {
+            m_overlap.x = m_distances[0];
+            m_obj1->m_velocity.x = 0;
+            m_obj1->m_acceleration.x = 0;
+        }
+        else if (m_obj1->m_previousHitbox.topLeft.x >= m_obj2->m_hitbox.bottomRight.x)
+        {
+            m_overlap.x = -m_distances[1];
+            m_obj1->m_velocity.x = 0;
+            m_obj1->m_acceleration.x = 0;
         }
 
         m_obj1->Move({-m_overlap.x, -m_overlap.y});
