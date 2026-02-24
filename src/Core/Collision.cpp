@@ -20,7 +20,10 @@ namespace Core
         {
             return true;
         }
-        else { return false; }
+        else
+        {
+            return false;
+        }
     }
 
     void AABB::Effect()
@@ -30,12 +33,14 @@ namespace Core
             m_overlap.y = m_distances[2];
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
+            m_obj1->isGrounded = true;
         }
         else if (m_obj1->m_previousHitbox.topLeft.y >= m_obj2->m_hitbox.bottomRight.y)
         {
             m_overlap.y = -m_distances[3];
             m_obj1->m_velocity.y = 0;
             m_obj1->m_acceleration.y = 0;
+            m_obj1->isGrounded = true;
         }
         else if (m_obj1->m_previousHitbox.bottomRight.x <= m_obj2->m_hitbox.topLeft.x)
         {

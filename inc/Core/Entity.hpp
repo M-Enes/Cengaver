@@ -11,6 +11,7 @@ namespace Core
     class Entity
     {
       public:
+        bool isGrounded = false;
         bool m_isAlive = true;
         sf::Vector2f m_position, m_velocity, m_acceleration;
         sf::Vector2f m_gravity = {0, 0.001};

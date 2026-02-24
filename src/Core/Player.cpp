@@ -27,12 +27,12 @@ namespace Core
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::W)
             {
-                m_input.isWPressed = UINT16_MAX;
+                m_input.isWPressed = 30;
                 logger.info("Pressed W");
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::S)
             {
-                m_input.isSPressed = UINT16_MAX;
+                m_input.isSPressed = 30;
                 logger.info("Pressed S");
             }
         }
@@ -89,7 +89,14 @@ namespace Core
         }
 
         if (m_input.isSPressed < m_input.isWPressed)
-            m_acceleration.y = -0.002;
+        {
+            if (isGrounded)
+            {
+                m_acceleration.y = -0.002;
+                isGrounded = false;
+            }
+        }
+
         else if (m_input.isSPressed > m_input.isWPressed)
             m_acceleration.y = 0.002;
         else
