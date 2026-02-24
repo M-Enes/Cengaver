@@ -8,8 +8,7 @@ namespace Core
         : specification(specification)
     {}
 
-    Window::~Window()
-    { Destroy(); }
+    Window::~Window() { Destroy(); }
 
     void Window::Create()
     {
@@ -30,11 +29,9 @@ namespace Core
         renderWindow = nullptr;
     }
 
-    void Window::Close()
-    { renderWindow->close(); }
+    void Window::Close() { renderWindow->close(); }
 
-    bool Window::ShouldClose() const
-    { return !renderWindow->isOpen(); }
+    bool Window::ShouldClose() const { return !renderWindow->isOpen(); }
 
     void Window::PollEvents(Game *game)
     {
@@ -44,14 +41,11 @@ namespace Core
         }
     }
 
-    void Window::Clear()
-    { renderWindow->clear(); }
+    void Window::Clear() { renderWindow->clear(); }
 
-    void Window::Display()
-    { renderWindow->display(); }
+    void Window::Display() { renderWindow->display(); }
 
     /* Do not call before Create() or after Destroy() */
-    sf::RenderWindow& Window::GetRenderWindow()
-    { return *renderWindow; }
+    sf::RenderWindow& Window::GetRenderWindow() { return *renderWindow; }
 
 } // namespace Core

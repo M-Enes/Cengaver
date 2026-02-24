@@ -10,10 +10,7 @@ namespace Core
         m_distances[2] = m_obj1->m_hitbox.bottomRight.y - m_obj2->m_hitbox.topLeft.y;
         m_distances[3] = m_obj2->m_hitbox.bottomRight.y - m_obj1->m_hitbox.topLeft.y;
 
-        if (m_obj1 != m_obj2 && Check())
-        {
-            Effect();
-        }
+        if (m_obj1 != m_obj2 && Check()) { Effect(); }
     }
 
     bool AABB::Check()

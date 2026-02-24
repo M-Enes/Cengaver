@@ -10,9 +10,7 @@ namespace Core
       public:
         virtual ~Layer() = default;
 
-        virtual bool OnEvent(const sf::Event& event)
-        { return false; };
-
+        virtual bool OnEvent(const sf::Event& event) { return false; };
         virtual void OnUpdate(float timeStep) {};
         virtual void OnRender(Core::Window& window) {};
 

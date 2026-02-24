@@ -32,10 +32,7 @@ namespace Core
         }
     }
 
-    void Entity::OnRender(sf::RenderWindow& renderWindow)
-    {
-        renderWindow.draw(m_sprite);
-    }
+    void Entity::OnRender(sf::RenderWindow& renderWindow) { renderWindow.draw(m_sprite); }
 
     void Entity::Move(sf::Vector2f dx)
     {

@@ -119,14 +119,8 @@ namespace Core
         // std::to_string(m_velocity.y));
     }
 
-    void Player::OnRender(sf::RenderWindow& renderWindow)
-    {
-        renderWindow.draw(m_sprite);
-    }
+    void Player::OnRender(sf::RenderWindow& renderWindow) { renderWindow.draw(m_sprite); }
 
-    void Player::Move(sf::Vector2f dx)
-    {
-        Entity::Move(dx);
-    }
+    void Player::Move(sf::Vector2f dx) { Entity::Move(dx); }
 
 } // namespace Core

@@ -1,6 +1,7 @@
 #include "Game/TestLevelLayer.hpp"
 #include "Core/Entity.hpp"
 #include "Core/Physics.hpp"
+#include <SFML/Window/Keyboard.hpp>
 
 namespace Game
 {
