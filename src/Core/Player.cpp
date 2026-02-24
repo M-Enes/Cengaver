@@ -92,7 +92,7 @@ namespace Core
         {
             if (isGrounded)
             {
-                m_acceleration.y = -0.002;
+                m_velocity.y = -0.45;
                 isGrounded = false;
             }
         }
@@ -112,7 +112,6 @@ namespace Core
         if (m_velocity.x > MaxSpeed) { m_velocity.x = MaxSpeed; }
         else if (m_velocity.x < -MaxSpeed) { m_velocity.x = -MaxSpeed; }
         if (m_velocity.y > MaxSpeed) { m_velocity.y = MaxSpeed; }
-        else if (m_velocity.y < -MaxSpeed) { m_velocity.y = -MaxSpeed; }
 
         Move(m_velocity * dt);
 
