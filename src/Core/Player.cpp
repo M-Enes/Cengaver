@@ -1,5 +1,5 @@
 #include "Core/Player.hpp"
-#include "Core/log.hpp"
+// #include "Core/log.hpp"
 #include <cstdint>
 #include <SFML/Window/Keyboard.hpp>
 #include <string>
@@ -28,12 +28,12 @@ namespace Core
             else if (keyPressed->scancode == sf::Keyboard::Scancode::W)
             {
                 m_input.isWPressed = 30;
-                logger.info("Pressed W");
+                // logger.info("Pressed W");
             }
             else if (keyPressed->scancode == sf::Keyboard::Scancode::S)
             {
                 m_input.isSPressed = 30;
-                logger.info("Pressed S");
+                // logger.info("Pressed S");
             }
         }
         else if (const auto *keyReleased = event.getIf<sf::Event::KeyReleased>())
@@ -49,12 +49,12 @@ namespace Core
             else if (keyReleased->scancode == sf::Keyboard::Scancode::W)
             {
                 m_input.isWPressed = 0;
-                logger.info("Released W");
+                // logger.info("Released W");
             }
             else if (keyReleased->scancode == sf::Keyboard::Scancode::S)
             {
                 m_input.isSPressed = 0;
-                logger.info("Released S");
+                // logger.info("Released S");
             }
         }
     }
@@ -90,10 +90,10 @@ namespace Core
 
         if (m_input.isSPressed < m_input.isWPressed)
         {
-            if (isGrounded)
+            if (m_isGrounded)
             {
                 m_velocity.y = -0.45;
-                isGrounded = false;
+                m_isGrounded = false;
             }
         }
 
@@ -115,7 +115,8 @@ namespace Core
 
         Move(m_velocity * dt);
 
-        logger.info(std::to_string(m_velocity.x) + ", " + std::to_string(m_velocity.y));
+        // logger.info(std::to_string(m_velocity.x) + ", " +
+        // std::to_string(m_velocity.y));
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
