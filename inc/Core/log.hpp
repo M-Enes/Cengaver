@@ -38,8 +38,7 @@ namespace Core
             fout.open(path + title + ".txt");
         }
 
-        ~Log()
-        { fout.close(); }
+        ~Log() { fout.close(); }
 
         void trace(const std::string s)
         {

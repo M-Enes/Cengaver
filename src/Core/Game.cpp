@@ -18,10 +18,7 @@ namespace Core
         window->Create();
     }
 
-    Game::~Game()
-    {
-        window->Destroy();
-    }
+    Game::~Game() { window->Destroy(); }
 
     void Game::Run()
     {
@@ -71,14 +68,8 @@ namespace Core
         }
     }
 
-    void Game::Stop()
-    {
-        running = false;
-    }
+    void Game::Stop() { running = false; }
 
-    void Game::PushLayer(Layer& layer)
-    {
-        layerStack.push_back(&layer);
-    }
+    void Game::PushLayer(Layer& layer) { layerStack.push_back(&layer); }
 
 } // namespace Core
