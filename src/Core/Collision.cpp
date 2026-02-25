@@ -5,17 +5,17 @@ namespace Core
     namespace Physics
     {
 
-        static bool Check(Entity *entity1, Entity *entity2)
+        static bool Check(Entity& entity1, Entity& entity2)
         {
-            float& entity1Right = entity1->m_hitbox.bottomRight.x;
-            float& entity1Left = entity1->m_hitbox.topLeft.x;
-            float& entity1Top = entity1->m_hitbox.topLeft.y;
-            float& entity1Bottom = entity1->m_hitbox.bottomRight.y;
+            float& entity1Right = entity1.m_hitbox.bottomRight.x;
+            float& entity1Left = entity1.m_hitbox.topLeft.x;
+            float& entity1Top = entity1.m_hitbox.topLeft.y;
+            float& entity1Bottom = entity1.m_hitbox.bottomRight.y;
 
-            float& entity2Right = entity2->m_hitbox.bottomRight.x;
-            float& entity2Left = entity2->m_hitbox.topLeft.x;
-            float& entity2Top = entity2->m_hitbox.topLeft.y;
-            float& entity2Bottom = entity2->m_hitbox.bottomRight.y;
+            float& entity2Right = entity2.m_hitbox.bottomRight.x;
+            float& entity2Left = entity2.m_hitbox.topLeft.x;
+            float& entity2Top = entity2.m_hitbox.topLeft.y;
+            float& entity2Bottom = entity2.m_hitbox.bottomRight.y;
 
             if (entity1Right > entity2Left && entity2Right > entity1Left &&
                 entity1Bottom > entity2Top && entity2Bottom > entity1Top)
@@ -26,18 +26,18 @@ namespace Core
             return false;
         }
 
-        void ResolveX(Entity *entity1, Entity *entity2)
+        void ResolveX(Entity& entity1, Entity& entity2)
         {
 
             if (Check(entity1, entity2))
             {
-                if (entity1->m_kineticState == Entity::KineticState::Static &&
-                    entity2->m_kineticState == Entity::KineticState::Static)
+                if (entity1.m_kineticState == Entity::KineticState::Static &&
+                    entity2.m_kineticState == Entity::KineticState::Static)
                 {
                     // log the collision
                 }
-                else if (entity1->m_kineticState == Entity::KineticState::Dynamic &&
-                         entity2->m_kineticState == Entity::KineticState::Dynamic)
+                else if (entity1.m_kineticState == Entity::KineticState::Dynamic &&
+                         entity2.m_kineticState == Entity::KineticState::Dynamic)
                 {
                     // do nothing for now
                 }
@@ -46,15 +46,15 @@ namespace Core
                     Entity *dynamicEntity;
                     Entity *staticEntity;
 
-                    if (entity1->m_kineticState == Entity::KineticState::Dynamic)
+                    if (entity1.m_kineticState == Entity::KineticState::Dynamic)
                     {
-                        dynamicEntity = entity1;
-                        staticEntity = entity2;
+                        dynamicEntity = &entity1;
+                        staticEntity = &entity2;
                     }
                     else
                     {
-                        dynamicEntity = entity2;
-                        staticEntity = entity1;
+                        dynamicEntity = &entity2;
+                        staticEntity = &entity1;
                     }
 
                     // dynamic comes from left
@@ -80,18 +80,18 @@ namespace Core
             }
         }
 
-        void ResolveY(Entity *entity1, Entity *entity2)
+        void ResolveY(Entity& entity1, Entity& entity2)
         {
 
             if (Check(entity1, entity2))
             {
-                if (entity1->m_kineticState == Entity::KineticState::Static &&
-                    entity2->m_kineticState == Entity::KineticState::Static)
+                if (entity1.m_kineticState == Entity::KineticState::Static &&
+                    entity2.m_kineticState == Entity::KineticState::Static)
                 {
                     // log the collision
                 }
-                else if (entity1->m_kineticState == Entity::KineticState::Dynamic &&
-                         entity2->m_kineticState == Entity::KineticState::Dynamic)
+                else if (entity1.m_kineticState == Entity::KineticState::Dynamic &&
+                         entity2.m_kineticState == Entity::KineticState::Dynamic)
                 {
                     // do nothing for now
                 }
@@ -100,15 +100,15 @@ namespace Core
                     Entity *dynamicEntity;
                     Entity *staticEntity;
 
-                    if (entity1->m_kineticState == Entity::KineticState::Dynamic)
+                    if (entity1.m_kineticState == Entity::KineticState::Dynamic)
                     {
-                        dynamicEntity = entity1;
-                        staticEntity = entity2;
+                        dynamicEntity = &entity1;
+                        staticEntity = &entity2;
                     }
                     else
                     {
-                        dynamicEntity = entity2;
-                        staticEntity = entity1;
+                        dynamicEntity = &entity2;
+                        staticEntity = &entity1;
                     }
 
                     // dynamic comes from top
