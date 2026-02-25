@@ -2,60 +2,137 @@
 
 namespace Core
 {
-    AABB::AABB(Core::Entity *object1, Core::Entity *object2)
-        : m_obj1(object1), m_obj2(object2)
+    namespace Physics
     {
-        m_distances[0] = m_obj1->m_hitbox.bottomRight.x - m_obj2->m_hitbox.topLeft.x;
-        m_distances[1] = m_obj2->m_hitbox.bottomRight.x - m_obj1->m_hitbox.topLeft.x;
-        m_distances[2] = m_obj1->m_hitbox.bottomRight.y - m_obj2->m_hitbox.topLeft.y;
-        m_distances[3] = m_obj2->m_hitbox.bottomRight.y - m_obj1->m_hitbox.topLeft.y;
 
-        if (m_obj1 != m_obj2 && Check()) { Effect(); }
-    }
+        static bool Check(Entity *entity1, Entity *entity2)
+        {
+            float& entity1Right = entity1->m_hitbox.bottomRight.x;
+            float& entity1Left = entity1->m_hitbox.topLeft.x;
+            float& entity1Top = entity1->m_hitbox.topLeft.y;
+            float& entity1Bottom = entity1->m_hitbox.bottomRight.y;
 
-    bool AABB::Check()
-    {
-        if (m_distances[0] > 0 && m_distances[1] > 0 && m_distances[2] > 0 &&
-            m_distances[3] > 0)
-        {
-            return true;
-        }
-        else
-        {
+            float& entity2Right = entity2->m_hitbox.bottomRight.x;
+            float& entity2Left = entity2->m_hitbox.topLeft.x;
+            float& entity2Top = entity2->m_hitbox.topLeft.y;
+            float& entity2Bottom = entity2->m_hitbox.bottomRight.y;
+
+            if (entity1Right > entity2Left && entity2Right > entity1Left &&
+                entity1Bottom > entity2Top && entity2Bottom > entity1Top)
+            {
+                return true;
+            }
+
             return false;
         }
-    }
 
-    void AABB::Effect()
-    {
-        m_obj1->m_isGrounded = false;
+        void ResolveX(Entity *entity1, Entity *entity2)
+        {
 
-        if (m_obj1->m_previousHitbox.bottomRight.y <= m_obj2->m_hitbox.topLeft.y)
-        {
-            m_overlap.y = m_distances[2];
-            m_obj1->m_velocity.y = 0;
-            m_obj1->m_acceleration.y = 0;
-            m_obj1->m_isGrounded = true;
-        }
-        else if (m_obj1->m_previousHitbox.topLeft.y >= m_obj2->m_hitbox.bottomRight.y)
-        {
-            m_overlap.y = -m_distances[3];
-            m_obj1->m_velocity.y = 0;
-            m_obj1->m_acceleration.y = 0;
-        }
-        else if (m_obj1->m_previousHitbox.bottomRight.x <= m_obj2->m_hitbox.topLeft.x)
-        {
-            m_overlap.x = m_distances[0];
-            m_obj1->m_velocity.x = 0;
-            m_obj1->m_acceleration.x = 0;
-        }
-        else if (m_obj1->m_previousHitbox.topLeft.x >= m_obj2->m_hitbox.bottomRight.x)
-        {
-            m_overlap.x = -m_distances[1];
-            m_obj1->m_velocity.x = 0;
-            m_obj1->m_acceleration.x = 0;
+            if (Check(entity1, entity2))
+            {
+                if (entity1->m_kineticState == Entity::KineticState::Static &&
+                    entity2->m_kineticState == Entity::KineticState::Static)
+                {
+                    // log the collision
+                }
+                else if (entity1->m_kineticState == Entity::KineticState::Dynamic &&
+                         entity2->m_kineticState == Entity::KineticState::Dynamic)
+                {
+                    // do nothing for now
+                }
+                else
+                {
+                    Entity *dynamicEntity;
+                    Entity *staticEntity;
+
+                    if (entity1->m_kineticState == Entity::KineticState::Dynamic)
+                    {
+                        dynamicEntity = entity1;
+                        staticEntity = entity2;
+                    }
+                    else
+                    {
+                        dynamicEntity = entity2;
+                        staticEntity = entity1;
+                    }
+
+                    // dynamic comes from left
+                    float leftOverlap = dynamicEntity->m_hitbox.bottomRight.x -
+                                        staticEntity->m_hitbox.topLeft.x;
+
+                    // dynamic comes from right
+                    float rightOverlap = staticEntity->m_hitbox.bottomRight.x -
+                                         dynamicEntity->m_hitbox.topLeft.x;
+
+                    if (leftOverlap < rightOverlap)
+                    {
+                        dynamicEntity->Move({-leftOverlap, 0});
+                    }
+                    else
+                    {
+                        dynamicEntity->Move({rightOverlap, 0});
+                    }
+
+                    dynamicEntity->m_velocity.x = 0;
+                    dynamicEntity->m_acceleration.x = 0;
+                }
+            }
         }
 
-        m_obj1->Move({-m_overlap.x, -m_overlap.y});
-    }
+        void ResolveY(Entity *entity1, Entity *entity2)
+        {
+
+            if (Check(entity1, entity2))
+            {
+                if (entity1->m_kineticState == Entity::KineticState::Static &&
+                    entity2->m_kineticState == Entity::KineticState::Static)
+                {
+                    // log the collision
+                }
+                else if (entity1->m_kineticState == Entity::KineticState::Dynamic &&
+                         entity2->m_kineticState == Entity::KineticState::Dynamic)
+                {
+                    // do nothing for now
+                }
+                else
+                {
+                    Entity *dynamicEntity;
+                    Entity *staticEntity;
+
+                    if (entity1->m_kineticState == Entity::KineticState::Dynamic)
+                    {
+                        dynamicEntity = entity1;
+                        staticEntity = entity2;
+                    }
+                    else
+                    {
+                        dynamicEntity = entity2;
+                        staticEntity = entity1;
+                    }
+
+                    // dynamic comes from top
+                    float floorOverlap = dynamicEntity->m_hitbox.bottomRight.y -
+                                         staticEntity->m_hitbox.topLeft.y;
+
+                    // dynamic comes from bottom
+                    float ceilingOverlap = staticEntity->m_hitbox.bottomRight.y -
+                                           dynamicEntity->m_hitbox.topLeft.y;
+
+                    if (floorOverlap < ceilingOverlap)
+                    {
+                        dynamicEntity->Move({0, -floorOverlap});
+                        dynamicEntity->m_isGrounded = true;
+                    }
+                    else
+                    {
+                        dynamicEntity->Move({0, ceilingOverlap});
+                    }
+
+                    dynamicEntity->m_velocity.y = 0;
+                    dynamicEntity->m_acceleration.y = 0;
+                }
+            }
+        }
+    } // namespace Physics
 } // namespace Core

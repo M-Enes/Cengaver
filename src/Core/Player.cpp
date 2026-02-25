@@ -113,8 +113,6 @@ namespace Core
         else if (m_velocity.x < -MaxSpeed) { m_velocity.x = -MaxSpeed; }
         if (m_velocity.y > MaxSpeed) { m_velocity.y = MaxSpeed; }
 
-        Move(m_velocity * dt);
-
         // logger.info(std::to_string(m_velocity.x) + ", " +
         // std::to_string(m_velocity.y));
     }

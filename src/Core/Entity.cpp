@@ -28,7 +28,6 @@ namespace Core
         {
             m_previousHitbox = m_hitbox;
             m_velocity += (m_acceleration + m_gravity) * dt;
-            Move(m_velocity * dt);
         }
     }
 

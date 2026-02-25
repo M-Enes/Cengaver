@@ -65,9 +65,16 @@ namespace Game
     {
         for (int i = 0; i < blockCount; i++) block[i]->OnUpdate(dt);
         character->OnUpdate(dt);
+        character->Move({character->m_velocity.x * dt, 0});
         for (int i = 1; i < entities.size(); i++)
         {
-            Core::AABB(entities[0], entities[i]);
+            Core::Physics::ResolveX(character, entities[i]);
+        }
+        character->m_isGrounded = false;
+        character->Move({0, character->m_velocity.y * dt});
+        for (int i = 1; i < entities.size(); i++)
+        {
+            Core::Physics::ResolveY(character, entities[i]);
         }
     }
 
