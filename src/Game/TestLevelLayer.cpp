@@ -8,7 +8,7 @@ namespace Game
     TestLevelLayer::TestLevelLayer()
     {
         character =
-            new Core::Player({100, 100}, {{10, 11}, {23, 25}}, 5, Core::Entity::Dynamic,
+            new Core::Player({120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
                              sf::Texture("../../res/images/idle_0.png"));
         block[0] =
             new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
@@ -40,6 +40,14 @@ namespace Game
                                          {{16, 16}, {16, 16}}));
         block[7] =
             new Core::Entity({200, 440}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[8] =
+            new Core::Entity({520, 280}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[9] =
+            new Core::Entity({440, 280}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
                              sf::Texture("../../res/images/castle-tileset.png", false,
                                          {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
@@ -81,8 +89,8 @@ namespace Game
     void TestLevelLayer::OnRender(Core::Window& window)
     {
         sf::RenderWindow& renderWindow = window.GetRenderWindow();
-        character->OnRender(renderWindow);
         for (int i = 0; i < blockCount; i++) block[i]->OnRender(renderWindow);
+        character->OnRender(renderWindow);
 
         if (debugMode)
         {
