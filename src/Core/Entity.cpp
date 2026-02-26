@@ -5,10 +5,15 @@ namespace Core
     int Entity::idCounter = 0;
 
     Entity::Entity(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-                   sf::Texture texture)
-        : m_position(position), m_scale(scale), m_texture(texture), m_sprite(m_texture)
+                   KineticState kineticState, sf::Texture texture)
+        : m_position(position),
+          m_scale(scale),
+          m_texture(texture),
+          m_sprite(m_texture),
+          m_kineticState(kineticState)
     {
         m_hitbox = {m_position + m_scale * hitbox.x, m_position + m_scale * hitbox.y};
+        m_previousHitbox = {{0, 0}, {0, 0}};
         m_sprite.setPosition(m_position);
         m_sprite.setScale({m_scale, m_scale});
     }
@@ -19,14 +24,15 @@ namespace Core
 
     void Entity::OnUpdate(float dt)
     {
-        m_velocity += m_acceleration * dt;
-        Move(m_velocity * dt);
+        if (this->m_kineticState != Static)
+        {
+            m_previousHitbox = m_hitbox;
+            m_velocity += (m_acceleration + m_gravity) * dt;
+            Move(m_velocity * dt);
+        }
     }
 
-    void Entity::OnRender(sf::RenderWindow& renderWindow)
-    {
-        renderWindow.draw(m_sprite);
-    }
+    void Entity::OnRender(sf::RenderWindow& renderWindow) { renderWindow.draw(m_sprite); }
 
     void Entity::Move(sf::Vector2f dx)
     {

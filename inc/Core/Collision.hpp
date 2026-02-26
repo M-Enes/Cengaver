@@ -11,13 +11,11 @@ namespace Core
         AABB(Core::Entity *object1, Core::Entity *object2);
 
       private:
-        bool Check(float distances[4]);
-        void Effect(Core::Entity *obj1, Core::Entity *obj2);
+        Core::Entity *m_obj1;
+        Core::Entity *m_obj2;
+        float m_distances[4];
+        sf::Vector2f m_overlap = {0, 0};
+        bool Check();
+        void Effect();
     };
-
-    // Seperating Axis Theorem
-    // class SAT
-    // {
-    //     static bool Check(Core::Entity& entity1, Core::Entity& entity2);
-    // };
 } // namespace Core

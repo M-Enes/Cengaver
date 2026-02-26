@@ -1,11 +1,6 @@
 #include "Core/Window.hpp"
 #include "Core/Game.hpp"
 #include <optional>
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/Window/ContextSettings.hpp>
-#include <SFML/Window/Event.hpp>
-#include <SFML/Window/VideoMode.hpp>
-#include <SFML/Window/WindowEnums.hpp>
 
 namespace Core
 {
@@ -13,10 +8,7 @@ namespace Core
         : specification(specification)
     {}
 
-    Window::~Window()
-    {
-        Destroy();
-    }
+    Window::~Window() { Destroy(); }
 
     void Window::Create()
     {
@@ -27,6 +19,7 @@ namespace Core
 
         renderWindow->setVerticalSyncEnabled(specification.vsyncEnabled);
         renderWindow->setFramerateLimit(specification.fpsLimit);
+        renderWindow->setKeyRepeatEnabled(specification.keyRepeat);
     }
 
     void Window::Destroy()
@@ -36,17 +29,11 @@ namespace Core
         renderWindow = nullptr;
     }
 
-    void Window::Close()
-    {
-        renderWindow->close();
-    }
+    void Window::Close() { renderWindow->close(); }
 
-    bool Window::ShouldClose() const
-    {
-        return !renderWindow->isOpen();
-    }
+    bool Window::ShouldClose() const { return !renderWindow->isOpen(); }
 
-    void Window::PollEvents(Game * game)
+    void Window::PollEvents(Game *game)
     {
         while (const std::optional event = renderWindow->pollEvent())
         {
@@ -54,20 +41,11 @@ namespace Core
         }
     }
 
-    void Window::Clear()
-    {
-        renderWindow->clear();
-    }
+    void Window::Clear() { renderWindow->clear(); }
 
-    void Window::Display()
-    {
-        renderWindow->display();
-    }
+    void Window::Display() { renderWindow->display(); }
 
     /* Do not call before Create() or after Destroy() */
-    sf::RenderWindow& Window::GetRenderWindow()
-    {
-        return *renderWindow;
-    }
+    sf::RenderWindow& Window::GetRenderWindow() { return *renderWindow; }
 
 } // namespace Core

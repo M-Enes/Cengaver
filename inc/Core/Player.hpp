@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/Collision.hpp"
 #include "Core/Entity.hpp"
 
 namespace Core
@@ -9,7 +10,7 @@ namespace Core
 
       public:
         Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-               sf::Texture texture);
+               KineticState kineticState, sf::Texture texture);
         ~Player();
 
         void OnEvent(const sf::Event& Event) override;
@@ -19,6 +20,8 @@ namespace Core
         void Move(sf::Vector2f dx) override;
 
       private:
+        const float MaxSpeed = 0.4;
+
         enum
         {
             Idle,
@@ -31,6 +34,12 @@ namespace Core
             Loss
         } m_state;
 
-        bool inputProcessed = true;
+        struct
+        {
+            uint16_t isAPressed = 0;
+            uint16_t isDPressed = 0;
+            uint16_t isWPressed = 0;
+            uint16_t isSPressed = 0;
+        } m_input;
     };
 } // namespace Core

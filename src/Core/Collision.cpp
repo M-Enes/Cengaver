@@ -1,30 +1,23 @@
 #include "Core/Collision.hpp"
-#include "Core/Entity.hpp"
-#include <iostream>
-#include <SFML/System/Vector2.hpp>
 
 namespace Core
 {
-    int a = 0;
-
-    AABB::AABB(Core::Entity *obj1, Core::Entity *obj2)
+    AABB::AABB(Core::Entity *object1, Core::Entity *object2)
+        : m_obj1(object1), m_obj2(object2)
     {
-        float distances[4] = {obj1->m_hitbox.bottomRight.x - obj2->m_hitbox.topLeft.x,
-                              obj2->m_hitbox.bottomRight.x - obj1->m_hitbox.topLeft.x,
-                              obj1->m_hitbox.bottomRight.y - obj2->m_hitbox.topLeft.y,
-                              obj2->m_hitbox.bottomRight.y - obj1->m_hitbox.topLeft.y};
+        m_distances[0] = m_obj1->m_hitbox.bottomRight.x - m_obj2->m_hitbox.topLeft.x;
+        m_distances[1] = m_obj2->m_hitbox.bottomRight.x - m_obj1->m_hitbox.topLeft.x;
+        m_distances[2] = m_obj1->m_hitbox.bottomRight.y - m_obj2->m_hitbox.topLeft.y;
+        m_distances[3] = m_obj2->m_hitbox.bottomRight.y - m_obj1->m_hitbox.topLeft.y;
 
-        if (Check(distances)) { Effect(obj1, obj2); }
+        if (m_obj1 != m_obj2 && Check()) { Effect(); }
     }
 
-    bool AABB::Check(float distances[4])
+    bool AABB::Check()
     {
-        // std::cout << distances[0] << ", " << distances[1] << ", " << distances[2] << ",
-        // "
-        //           << distances[3] << "\n";
-        if (distances[0] > 0 & distances[1] > 0 & distances[2] > 0 & distances[3] > 0)
+        if (m_distances[0] > 0 && m_distances[1] > 0 && m_distances[2] > 0 &&
+            m_distances[3] > 0)
         {
-            // std::cout << "Collision " << a++ << " detected" << "\n";
             return true;
         }
         else
@@ -33,61 +26,36 @@ namespace Core
         }
     }
 
-    void AABB::Effect(Core::Entity *obj1, Core::Entity *obj2)
+    void AABB::Effect()
     {
-        sf::Vector2f overlap = {0, 0};
+        m_obj1->m_isGrounded = false;
 
-        if (obj1->m_velocity.x != 0)
+        if (m_obj1->m_previousHitbox.bottomRight.y <= m_obj2->m_hitbox.topLeft.y)
         {
-            if (obj1->m_velocity.x > 0)
-            {
-                overlap.x = obj1->m_hitbox.bottomRight.x - obj2->m_hitbox.topLeft.x;
-            }
-            else if (obj1->m_velocity.x < 0)
-            {
-                overlap.x = obj1->m_hitbox.topLeft.x - obj2->m_hitbox.bottomRight.x;
-            }
-
-            obj1->m_velocity.x = 0;
+            m_overlap.y = m_distances[2];
+            m_obj1->m_velocity.y = 0;
+            m_obj1->m_acceleration.y = 0;
+            m_obj1->m_isGrounded = true;
         }
-        else if (obj1->m_velocity.y != 0)
+        else if (m_obj1->m_previousHitbox.topLeft.y >= m_obj2->m_hitbox.bottomRight.y)
         {
-            if (obj1->m_velocity.y > 0)
-            {
-                overlap.y = obj1->m_hitbox.bottomRight.y - obj2->m_hitbox.topLeft.y;
-            }
-            else if (obj1->m_velocity.y < 0)
-            {
-                overlap.y = obj1->m_hitbox.topLeft.y - obj2->m_hitbox.bottomRight.y;
-            }
-
-            obj1->m_velocity.y = 0;
+            m_overlap.y = -m_distances[3];
+            m_obj1->m_velocity.y = 0;
+            m_obj1->m_acceleration.y = 0;
         }
-
-        if (obj1->m_kineticState == Entity::Dynamic &
-            obj2->m_kineticState == Entity::Dynamic)
+        else if (m_obj1->m_previousHitbox.bottomRight.x <= m_obj2->m_hitbox.topLeft.x)
         {
-            obj1->Move({(-overlap.x) / 2, (-overlap.y) / 2});
-            obj2->Move({(overlap.x) / 2, (overlap.y) / 2});
+            m_overlap.x = m_distances[0];
+            m_obj1->m_velocity.x = 0;
+            m_obj1->m_acceleration.x = 0;
         }
-        else if (obj1->m_kineticState == Entity::Dynamic)
+        else if (m_obj1->m_previousHitbox.topLeft.x >= m_obj2->m_hitbox.bottomRight.x)
         {
-            obj1->Move({-overlap.x, -overlap.y});
-        }
-        else if (obj2->m_kineticState == Entity::Dynamic)
-        {
-            obj2->Move({-overlap.x, -overlap.y});
+            m_overlap.x = -m_distances[1];
+            m_obj1->m_velocity.x = 0;
+            m_obj1->m_acceleration.x = 0;
         }
 
-        if (obj1->m_hitbox.bottomRight.x <= obj2->m_hitbox.topLeft.x |
-            obj1->m_hitbox.topLeft.x >= obj2->m_hitbox.bottomRight.x)
-        {
-            obj1->m_velocity.x = 0;
-        }
-        if (obj1->m_hitbox.bottomRight.y <= obj2->m_hitbox.topLeft.y |
-            obj1->m_hitbox.topLeft.y >= obj2->m_hitbox.bottomRight.y)
-        {
-            obj1->m_velocity.y = 0;
-        }
+        m_obj1->Move({-m_overlap.x, -m_overlap.y});
     }
 } // namespace Core

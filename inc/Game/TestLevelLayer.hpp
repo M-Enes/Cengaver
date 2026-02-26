@@ -22,7 +22,7 @@ namespace Game
         bool debugMode = false;
         Core::Player *character = nullptr;
         std::vector<Core::Entity *> entities;
-        static constexpr int blockCount = 6;
+        static constexpr int blockCount = 8;
         Core::Entity *block[blockCount];
     };
 } // namespace Game

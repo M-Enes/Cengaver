@@ -18,10 +18,7 @@ namespace Core
         window->Create();
     }
 
-    Game::~Game()
-    {
-        window->Destroy();
-    }
+    Game::~Game() { window->Destroy(); }
 
     void Game::Run()
     {
@@ -41,12 +38,13 @@ namespace Core
 
             window->PollEvents(this);
 
-            window->Clear();
-
-            for (Layer *layer : layerStack) { layer->OnUpdate(elapsed); }
-            for (Layer *layer : layerStack) { layer->OnRender(*window); }
-
-            window->Display();
+            if (window->GetRenderWindow().hasFocus())
+            {
+                window->Clear();
+                for (Layer *layer : layerStack) { layer->OnUpdate(elapsed); }
+                for (Layer *layer : layerStack) { layer->OnRender(*window); }
+                window->Display();
+            }
         }
     }
 
@@ -70,14 +68,8 @@ namespace Core
         }
     }
 
-    void Game::Stop()
-    {
-        running = false;
-    }
+    void Game::Stop() { running = false; }
 
-    void Game::PushLayer(Layer& layer)
-    {
-        layerStack.push_back(&layer);
-    }
+    void Game::PushLayer(Layer& layer) { layerStack.push_back(&layer); }
 
 } // namespace Core

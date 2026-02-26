@@ -22,7 +22,6 @@ ReferenceAlignment: Left
 
 # single-liners
 PackConstructorInitializers: NextLineOnly
-AllowShortFunctionsOnASingleLine: Empty
 AllowShortBlocksOnASingleLine: Always
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AllowShortLoopsOnASingleLine: true

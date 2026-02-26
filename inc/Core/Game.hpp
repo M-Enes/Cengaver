@@ -28,7 +28,7 @@ namespace Core
 
       private:
         GameSpecification specification;
-        Window * window;
+        Window *window;
         bool running = false;
         std::vector<Layer *> layerStack;
     };

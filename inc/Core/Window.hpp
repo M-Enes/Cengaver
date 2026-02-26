@@ -21,6 +21,8 @@ namespace Core
         bool vsyncEnabled = false;
 
         bool fullScreen = false;
+
+        bool keyRepeat = false;
     };
 
     class Game;
