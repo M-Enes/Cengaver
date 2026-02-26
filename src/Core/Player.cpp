@@ -1,14 +1,14 @@
-#include "Core/Player.hpp"
+#include "Game/Player.hpp"
 // #include "Core/log.hpp"
 #include <cstdint>
 #include <SFML/Window/Keyboard.hpp>
 #include <string>
 
-namespace Core
+namespace Game
 {
     Player::Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
                    KineticState kineticState, sf::Texture texture)
-        : Entity(position, hitbox, scale, kineticState, texture), m_state(Idle)
+        : Entity(position, hitbox, scale, kineticState, texture), m_movementState(nullptr)
     {}
 
     Player::~Player() {}
@@ -121,4 +121,4 @@ namespace Core
 
     void Player::Move(sf::Vector2f dx) { Entity::Move(dx); }
 
-} // namespace Core
+} // namespace Game

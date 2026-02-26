@@ -8,7 +8,7 @@ namespace Game
     TestLevelLayer::TestLevelLayer()
     {
         character =
-            new Core::Player({120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
+            new Game::Player({120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
                              sf::Texture("../../res/images/idle_0.png"));
         block[0] =
             new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,

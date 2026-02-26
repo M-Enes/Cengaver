@@ -2,10 +2,11 @@
 
 #include "Core/Collision.hpp"
 #include "Core/Entity.hpp"
+#include "Game/IMovementState.hpp"
 
-namespace Core
+namespace Game
 {
-    class Player : public Entity
+    class Player : public Core::Entity
     {
 
       public:
@@ -22,17 +23,7 @@ namespace Core
       private:
         const float MaxSpeed = 0.4;
 
-        enum
-        {
-            Idle,
-            Running,
-            Jumping,
-            Falling,
-            Attacking,
-            Swiming,
-            Victory,
-            Loss
-        } m_state;
+        IMovementState *m_movementState;
 
         struct
         {
@@ -42,4 +33,4 @@ namespace Core
             uint16_t isSPressed = 0;
         } m_input;
     };
-} // namespace Core
+} // namespace Game
