@@ -2,7 +2,7 @@
 
 #include "Core/Entity.hpp"
 #include "Core/Layer.hpp"
-#include "Core/Player.hpp"
+#include "Game/Player.hpp"
 #include <vector>
 
 namespace Game
@@ -20,9 +20,9 @@ namespace Game
 
       private:
         bool debugMode = false;
-        Core::Player *character = nullptr;
+        Player *character = nullptr;
         std::vector<Core::Entity *> entities;
-        static constexpr int blockCount = 8;
+        static constexpr int blockCount = 10;
         Core::Entity *block[blockCount];
     };
 } // namespace Game

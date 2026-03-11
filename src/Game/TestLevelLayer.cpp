@@ -8,7 +8,7 @@ namespace Game
     TestLevelLayer::TestLevelLayer()
     {
         character =
-            new Core::Player({100, 100}, {{10, 11}, {23, 25}}, 5, Core::Entity::Dynamic,
+            new Game::Player({120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
                              sf::Texture("../../res/images/idle_0.png"));
         block[0] =
             new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
@@ -42,6 +42,14 @@ namespace Game
             new Core::Entity({200, 440}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
                              sf::Texture("../../res/images/castle-tileset.png", false,
                                          {{16, 16}, {16, 16}}));
+        block[8] =
+            new Core::Entity({520, 280}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
+        block[9] =
+            new Core::Entity({440, 280}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
+                             sf::Texture("../../res/images/castle-tileset.png", false,
+                                         {{16, 16}, {16, 16}}));
         character->m_kineticState = Core::Entity::Dynamic;
 
         entities.push_back(character);
@@ -65,17 +73,24 @@ namespace Game
     {
         for (int i = 0; i < blockCount; i++) block[i]->OnUpdate(dt);
         character->OnUpdate(dt);
+        character->Move({character->m_velocity.x * dt, 0});
         for (int i = 1; i < entities.size(); i++)
         {
-            Core::AABB(entities[0], entities[i]);
+            Core::Physics::ResolveX(*character, *(entities[i]));
+        }
+        character->m_isGrounded = false;
+        character->Move({0, character->m_velocity.y * dt});
+        for (int i = 1; i < entities.size(); i++)
+        {
+            Core::Physics::ResolveY(*character, *(entities[i]));
         }
     }
 
     void TestLevelLayer::OnRender(Core::Window& window)
     {
         sf::RenderWindow& renderWindow = window.GetRenderWindow();
-        character->OnRender(renderWindow);
         for (int i = 0; i < blockCount; i++) block[i]->OnRender(renderWindow);
+        character->OnRender(renderWindow);
 
         if (debugMode)
         {
