@@ -1,15 +1,16 @@
 #include "Game/TestLevelLayer.hpp"
 #include "Core/Entity.hpp"
 #include "Core/Physics.hpp"
+#include "Game/Player.hpp"
 #include <SFML/Window/Keyboard.hpp>
 
 namespace Game
 {
     TestLevelLayer::TestLevelLayer()
     {
-        character =
-            new Game::Player({120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
-                             sf::Texture("../../res/images/idle_0.png"));
+        character = new Game::Player(
+            {120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
+            sf::Texture("../../res/images/idle_0.png"), "../../res/images/animtest");
         block[0] =
             new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
                              sf::Texture("../../res/images/castle-tileset.png", false,

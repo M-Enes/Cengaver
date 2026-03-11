@@ -2,6 +2,7 @@
 #include "Game/IMovementState.hpp"
 #include "Game/States/IdleState.hpp"
 // #include "Core/log.hpp"
+#include "Core/Animable.hpp"
 #include <cstdint>
 #include <SFML/Window/Keyboard.hpp>
 #include <string>
@@ -9,8 +10,12 @@
 namespace Game
 {
     Player::Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-                   KineticState kineticState, sf::Texture texture)
-        : Entity(position, hitbox, scale, kineticState, texture), m_movementState(nullptr)
+                   KineticState kineticState, sf::Texture texture,
+                   std::string animationsPath)
+        : Entity(position, hitbox, scale, kineticState, texture),
+          Animable(animationsPath),
+          m_movementState(nullptr)
+
     {
         m_movementState = new IdleState();
     }
@@ -65,6 +70,17 @@ namespace Game
 
     void Player::OnUpdate(float dt)
     {
+        static float timePassed = 0;
+        if (timePassed > 16.0f)
+        {
+            goToNextFrame();
+            timePassed = 0;
+        }
+        else
+        {
+            timePassed++;
+        }
+
         m_previousHitbox = m_hitbox;
         IMovementState *transitionToState = m_movementState->CheckTransition(*this);
         if (transitionToState != nullptr)
@@ -133,7 +149,11 @@ namespace Game
         // std::to_string(m_velocity.y));
     }
 
-    void Player::OnRender(sf::RenderWindow& renderWindow) { renderWindow.draw(m_sprite); }
+    void Player::OnRender(sf::RenderWindow& renderWindow)
+    {
+        m_sprite.setTexture(*getCurrentFrame());
+        renderWindow.draw(m_sprite);
+    }
 
     void Player::Move(sf::Vector2f dx) { Entity::Move(dx); }
 

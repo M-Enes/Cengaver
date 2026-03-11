@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Core/Animable.hpp"
-#include "Core/Collision.hpp"
 #include "Core/Entity.hpp"
-#include "Game/IMovementState.hpp"
 
-namespace Game
+namespace Core
 {
-    class Player : public Core::Entity, public Core::Animable
+    class Player : public Entity, public Animable
     {
 
       public:
@@ -23,16 +21,18 @@ namespace Game
         void Move(sf::Vector2f dx) override;
 
       private:
-        const float MaxSpeed = 0.4;
-
-        IMovementState *m_movementState;
-
-        struct
+        enum
         {
-            uint16_t isAPressed = 0;
-            uint16_t isDPressed = 0;
-            uint16_t isWPressed = 0;
-            uint16_t isSPressed = 0;
-        } m_input;
+            Idle,
+            Running,
+            Jumping,
+            Falling,
+            Attacking,
+            Swiming,
+            Victory,
+            Loss
+        } m_state;
+
+        bool inputProcessed = true;
     };
-} // namespace Game
+} // namespace Core
