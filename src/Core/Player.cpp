@@ -1,4 +1,6 @@
 #include "Game/Player.hpp"
+#include "Game/IMovementState.hpp"
+#include "Game/States/IdleState.hpp"
 // #include "Core/log.hpp"
 #include <cstdint>
 #include <SFML/Window/Keyboard.hpp>
@@ -9,7 +11,9 @@ namespace Game
     Player::Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
                    KineticState kineticState, sf::Texture texture)
         : Entity(position, hitbox, scale, kineticState, texture), m_movementState(nullptr)
-    {}
+    {
+        m_movementState = new IdleState();
+    }
 
     Player::~Player() {}
 
@@ -62,6 +66,18 @@ namespace Game
     void Player::OnUpdate(float dt)
     {
         m_previousHitbox = m_hitbox;
+        IMovementState *transitionToState = m_movementState->CheckTransition(*this);
+        if (transitionToState != nullptr)
+        {
+            m_movementState->OnExit(*this);
+            delete m_movementState;
+            m_movementState = transitionToState;
+            m_movementState->OnEnter(*this);
+        }
+        else
+        {
+            m_movementState->OnUpdate(*this);
+        }
 
         if (m_input.isAPressed < m_input.isDPressed)
         {
