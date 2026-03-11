@@ -41,20 +41,21 @@ namespace Core
         m_hitbox.bottomRight += dx;
         m_sprite.setPosition(m_position);
         inputProcessed = true;
+
+        static float timePassed = 0;
+        if (timePassed > 16.0f)
+        {
+            goToNextFrame();
+            timePassed = 0;
+        }
+        else
+        {
+            timePassed++;
+        }
     }
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
     {
-        static int counter = 0;
-        if (counter == 6)
-        {
-            goToNextFrame();
-            counter = 0;
-        }
-        else
-        {
-            counter++;
-        }
         m_sprite.setTexture(*getCurrentFrame());
         renderWindow.draw(m_sprite);
     }
