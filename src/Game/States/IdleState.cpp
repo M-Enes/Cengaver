@@ -11,6 +11,7 @@ namespace Game
     void IdleState::OnEnter(Player& player)
     {
         std::cout << "Entered Idle State" << std::endl;
+        player.goToAnimation("idle");
     }
     void IdleState::OnUpdate(Player& player) {}
     void IdleState::OnExit(Player& player) {}
