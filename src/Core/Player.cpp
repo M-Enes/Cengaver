@@ -70,6 +70,22 @@ namespace Game
 
     void Player::OnUpdate(float dt)
     {
+        int width = m_sprite.getTexture().getSize().x;
+        int height = m_sprite.getTexture().getSize().y;
+
+        int hleftx = (m_hitbox.topLeft.x - m_position.x) / m_scale;
+        int hwidth = ((int)m_hitbox.bottomRight.x - (int)m_hitbox.topLeft.x) / m_scale;
+
+        if (m_velocity.x < -0.10f)
+        {
+            m_sprite.setTextureRect(
+                sf::IntRect({2 * hleftx + hwidth, 0}, {-width, height}));
+        }
+        else if (m_velocity.x > 0.10f)
+        {
+            m_sprite.setTextureRect(sf::IntRect({0, 0}, {width, height}));
+        }
+
         static float timePassed = 0;
         if (timePassed > 16.0f)
         {
