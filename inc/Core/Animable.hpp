@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <SFML/Graphics/Texture.hpp>
 #include <unordered_map>
+#include <vector>
 
 namespace Core
 {
