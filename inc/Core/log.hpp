@@ -1,11 +1,13 @@
-// There must be a log folder for this to work!
 #pragma once
 
 #include <cstdint>
 #include <ctime>
+#include <filesystem>
 #include <fstream>
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
+#include <string>
+
 namespace Core
 {
     class Log
@@ -33,9 +35,23 @@ namespace Core
         Log(Level level = Info)
             : level(level), m_startTime(std::time(nullptr))
         {
+            std::filesystem::create_directory(path);
+            fout.open(path + "log.txt");
+
+            std::tm timeInfo = {};
+            errno_t error_code;
+            error_code = localtime_s(&timeInfo, &m_startTime);
+
+            if (error_code != 0)
+            {
+                fout << "Error getting local time. Error code: " << error_code;
+                exit(1);
+            }
+
             char title[sizeof("yyyy-mm-dd hh:mm:ss")];
-            std::strftime(title, sizeof(title), "%F %T", std::localtime(&m_startTime));
-            fout.open(path + title + ".txt");
+            std::strftime(title, sizeof(title), "%F %T", &timeInfo);
+            fout << "Log from the session started at " << title << '\n';
+            fout.flush();
         }
 
         ~Log() { fout.close(); }
@@ -95,5 +111,7 @@ namespace Core
 
             return string;
         }
-    } logger;
+    };
+
+    inline Log logger;
 } // namespace Core
