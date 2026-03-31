@@ -1,5 +1,6 @@
 #include "Game/TestLevelLayer.hpp"
 #include "Core/Entity.hpp"
+#include "Core/log.hpp"
 #include "Core/Physics.hpp"
 #include "Game/Player.hpp"
 #include <SFML/Window/Keyboard.hpp>
@@ -8,6 +9,7 @@ namespace Game
 {
     TestLevelLayer::TestLevelLayer()
     {
+        Core::logger.info("Test Level Layer constructing...");
         character = new Game::Player(
             {120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
             sf::Texture("../../res/images/idle_0.png"), "../../res/images/animtest");
@@ -55,6 +57,7 @@ namespace Game
 
         entities.push_back(character);
         for (int i = 0; i < blockCount; i++) entities.push_back(block[i]);
+        Core::logger.info("Test Level Layer constructed.");
     }
 
     TestLevelLayer::~TestLevelLayer()
