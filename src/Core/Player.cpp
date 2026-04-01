@@ -88,7 +88,7 @@ namespace Game
         static float timePassed = 0;
         if (timePassed > 16.0f)
         {
-            goToNextFrame();
+            GoToNextFrame();
             timePassed = 0;
         }
         else
@@ -166,7 +166,7 @@ namespace Game
 
     void Player::OnRender(sf::RenderWindow& renderWindow)
     {
-        m_sprite.setTexture(*getCurrentFrame());
+        m_sprite.setTexture(*GetCurrentFrame());
         renderWindow.draw(m_sprite);
     }
 

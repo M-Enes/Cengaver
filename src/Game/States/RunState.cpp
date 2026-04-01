@@ -11,7 +11,7 @@ namespace Game
     void RunState::OnEnter(Player& player)
     {
         std::cout << "Entered Run State" << std::endl;
-        player.goToAnimation("run");
+        player.GoToAnimation("run");
     }
     void RunState::OnUpdate(Player& player) {}
     void RunState::OnExit(Player& player) {}

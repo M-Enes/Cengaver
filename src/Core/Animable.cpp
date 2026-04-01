@@ -15,7 +15,7 @@ namespace Core
             m_animations[animationName].push_back(texture);
         }
 
-        goToAnimation(m_animations.begin()->first);
+        GoToAnimation(m_animations.begin()->first);
     }
     Animable::~Animable()
     {
@@ -26,12 +26,12 @@ namespace Core
         }
     }
 
-    void Animable::goToNextFrame()
+    void Animable::GoToNextFrame()
     {
         m_currentAnimationFrame =
             (m_currentAnimationFrame + 1) % m_animations[m_currentAnimationName].size();
     }
-    void Animable::goToAnimation(std::string name)
+    void Animable::GoToAnimation(std::string name)
     {
         if (m_animations.find(name) == m_animations.end())
         {
@@ -42,7 +42,7 @@ namespace Core
         m_currentAnimationName = name;
         m_currentAnimationFrame = 0;
     }
-    sf::Texture *Animable::getCurrentFrame()
+    sf::Texture *Animable::GetCurrentFrame()
     {
         return m_animations[m_currentAnimationName][m_currentAnimationFrame];
     }

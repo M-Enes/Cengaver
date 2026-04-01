@@ -10,7 +10,7 @@ namespace Game
     void JumpState::OnEnter(Player& player)
     {
         std::cout << "Entered Jump State" << std::endl;
-        player.goToAnimation("jump");
+        player.GoToAnimation("jump");
     }
     void JumpState::OnUpdate(Player& player) {}
     void JumpState::OnExit(Player& player) {}
