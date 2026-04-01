@@ -25,7 +25,7 @@ namespace Game
       private:
         const float MaxSpeed = 0.4;
 
-        IMovementState *m_movementState;
+        std::unique_ptr<IMovementState> m_movementState;
 
         struct
         {

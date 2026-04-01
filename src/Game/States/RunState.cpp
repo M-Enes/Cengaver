@@ -3,6 +3,7 @@
 #include "Game/States/IdleState.hpp"
 #include "Game/States/JumpState.hpp"
 #include <iostream>
+#include <memory>
 #include <SFML/System/Vector2.hpp>
 
 namespace Game
@@ -14,11 +15,14 @@ namespace Game
     }
     void RunState::OnUpdate(Player& player) {}
     void RunState::OnExit(Player& player) {}
-    IMovementState *RunState::CheckTransition(Player& player)
+    std::unique_ptr<IMovementState> RunState::CheckTransition(Player& player)
     {
-        if (player.m_velocity == sf::Vector2f{0, 0}) { return new IdleState(); }
+        if (player.m_velocity == sf::Vector2f{0, 0})
+        {
+            return std::make_unique<IdleState>();
+        }
 
-        if (player.m_velocity.y != 0) { return new JumpState(); }
+        if (player.m_velocity.y != 0) { return std::make_unique<JumpState>(); }
 
         return nullptr;
     }

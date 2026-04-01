@@ -31,10 +31,8 @@ namespace Core
     {
       public:
         Window(const WindowSpecification& specification);
-        ~Window();
 
         void Create();
-        void Destroy();
         void Close();
 
         void Clear();
@@ -46,6 +44,6 @@ namespace Core
 
       private:
         WindowSpecification specification;
-        sf::RenderWindow *renderWindow = nullptr;
+        std::unique_ptr<sf::RenderWindow> renderWindow = nullptr;
     };
 } // namespace Core

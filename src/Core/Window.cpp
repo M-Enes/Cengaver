@@ -1,5 +1,6 @@
 #include "Core/Window.hpp"
 #include "Core/Game.hpp"
+#include <memory>
 #include <optional>
 
 namespace Core
@@ -8,11 +9,9 @@ namespace Core
         : specification(specification)
     {}
 
-    Window::~Window() { Destroy(); }
-
     void Window::Create()
     {
-        renderWindow = new sf::RenderWindow(
+        renderWindow = std::make_unique<sf::RenderWindow>(
             sf::VideoMode({specification.width, specification.height}),
             specification.title,
             specification.fullScreen ? sf::State::Fullscreen : sf::State::Windowed);
@@ -22,14 +21,10 @@ namespace Core
         renderWindow->setKeyRepeatEnabled(specification.keyRepeat);
     }
 
-    void Window::Destroy()
+    void Window::Close()
     {
-        if (renderWindow) { delete renderWindow; }
-
-        renderWindow = nullptr;
+        if (renderWindow) { renderWindow->close(); };
     }
-
-    void Window::Close() { renderWindow->close(); }
 
     bool Window::ShouldClose() const { return !renderWindow->isOpen(); }
 

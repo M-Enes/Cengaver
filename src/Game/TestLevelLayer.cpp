@@ -3,79 +3,101 @@
 #include "Core/log.hpp"
 #include "Core/Physics.hpp"
 #include "Game/Player.hpp"
+#include <memory>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <utility>
+#include <vector>
 
 namespace Game
 {
     TestLevelLayer::TestLevelLayer()
     {
         Core::logger.info("Test Level Layer constructing...");
-        character = new Game::Player(
-            {120, 100}, {{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
-            sf::Texture("../../res/images/idle_0.png"), "../../res/images/animtest");
-        block[0] =
-            new Core::Entity({200, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[1] =
-            new Core::Entity({280, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[2] =
-            new Core::Entity({360, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[3] =
-            new Core::Entity({440, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[4] =
-            new Core::Entity({520, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[5] =
-            new Core::Entity({600, 520}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[6] =
-            new Core::Entity({600, 440}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[7] =
-            new Core::Entity({200, 440}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[8] =
-            new Core::Entity({520, 280}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
-        block[9] =
-            new Core::Entity({440, 280}, {{0, 0}, {16, 16}}, 5, Core::Entity::Static,
-                             sf::Texture("../../res/images/castle-tileset.png", false,
-                                         {{16, 16}, {16, 16}}));
+        std::unique_ptr<Player> playerPtr = std::make_unique<Player>(
+            sf::Vector2f{120, 100}, sf::Vector2<sf::Vector2f>{{13, 11}, {20, 25}}, 5,
+            Core::Entity::Dynamic, sf::Texture("../../res/images/idle_0.png"),
+            "../../res/images/animtest");
+
+        character = playerPtr.get();
+        entities.push_back(std::move(playerPtr));
+
         character->m_kineticState = Core::Entity::Dynamic;
 
-        entities.push_back(character);
-        for (int i = 0; i < blockCount; i++) entities.push_back(block[i]);
+        std::vector<std::unique_ptr<Core::Entity>> blockPtrs;
+
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{200, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{280, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{360, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{440, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{520, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{600, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{600, 440}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{200, 440}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{520, 280}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+        blockPtrs.push_back(std::make_unique<Core::Entity>(
+            sf::Vector2f{440, 280}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+            Core::Entity::Static,
+            sf::Texture("../../res/images/castle-tileset.png", false,
+                        sf::IntRect{{16, 16}, {16, 16}})));
+
+        for (int i = 0; i < blockPtrs.size(); i++)
+        {
+            blocks.push_back(blockPtrs[i].get());
+            entities.push_back(std::move(blockPtrs[i]));
+        }
         Core::logger.info("Test Level Layer constructed.");
     }
 
-    TestLevelLayer::~TestLevelLayer()
-    {
-        for (int i = 0; i < entities.size(); i++) { delete entities[i]; }
-    }
+    TestLevelLayer::~TestLevelLayer() {}
 
     bool TestLevelLayer::OnEvent(const sf::Event& event)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F3)) debugMode = !debugMode;
         character->OnEvent(event);
-        for (int i = 0; i < blockCount; i++) block[i]->OnEvent(event);
+        for (int i = 0; i < blocks.size(); i++) blocks[i]->OnEvent(event);
         return true;
     }
 
     void TestLevelLayer::OnUpdate(float dt)
     {
-        for (int i = 0; i < blockCount; i++) block[i]->OnUpdate(dt);
+        for (int i = 0; i < blocks.size(); i++) blocks[i]->OnUpdate(dt);
         character->OnUpdate(dt);
         character->Move({character->m_velocity.x * dt, 0});
         for (int i = 1; i < entities.size(); i++)
@@ -93,7 +115,7 @@ namespace Game
     void TestLevelLayer::OnRender(Core::Window& window)
     {
         sf::RenderWindow& renderWindow = window.GetRenderWindow();
-        for (int i = 0; i < blockCount; i++) block[i]->OnRender(renderWindow);
+        for (int i = 0; i < blocks.size(); i++) blocks[i]->OnRender(renderWindow);
         character->OnRender(renderWindow);
 
         if (debugMode)

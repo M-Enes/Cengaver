@@ -2,6 +2,7 @@
 
 #include "Core/Layer.hpp"
 #include "Core/Window.hpp"
+#include <memory>
 #include <SFML/Window/Event.hpp>
 #include <string>
 
@@ -22,14 +23,14 @@ namespace Core
         void Run();
         void Stop();
 
-        void PushLayer(Layer& layer);
+        void PushLayer(std::unique_ptr<Layer> layer);
 
         void RaiseEvent(const sf::Event& event);
 
       private:
         GameSpecification specification;
-        Window *window;
+        std::unique_ptr<Window> window;
         bool running = false;
-        std::vector<Layer *> layerStack;
+        std::vector<std::unique_ptr<Layer>> layerStack;
     };
 } // namespace Core

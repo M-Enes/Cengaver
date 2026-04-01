@@ -1,5 +1,6 @@
 #include "Core/Game.hpp"
 #include "Game/TestLevelLayer.hpp"
+#include <memory>
 
 int main()
 {
@@ -9,8 +10,10 @@ int main()
     gameSpec.windowSpec.height = 720;
 
     Core::Game game(gameSpec);
-    Game::TestLevelLayer testLevel = Game::TestLevelLayer();
-    game.PushLayer(testLevel);
+    std::unique_ptr<Game::TestLevelLayer> testLevel =
+        std::make_unique<Game::TestLevelLayer>();
+
+    game.PushLayer(std::move(testLevel));
 
     game.Run();
 }
