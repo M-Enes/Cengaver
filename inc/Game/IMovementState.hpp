@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 namespace Game
 {
     class Player;
@@ -16,7 +18,7 @@ namespace Game
          * If found any, then creates an object of target IMovementState derived type
          * and returns address of it. Otherwise, returns nullptr.
          */
-        virtual IMovementState *CheckTransition(Player& player) = 0;
+        virtual std::unique_ptr<IMovementState> CheckTransition(Player& player) = 0;
     };
 
 } // namespace Game

@@ -11,7 +11,7 @@ namespace Game
         virtual void OnEnter(Player& player);
         virtual void OnUpdate(Player& player);
         virtual void OnExit(Player& player);
-        virtual IMovementState *CheckTransition(Player& player);
+        virtual std::unique_ptr<IMovementState> CheckTransition(Player& player);
     };
 
 } // namespace Game

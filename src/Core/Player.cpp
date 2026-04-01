@@ -4,6 +4,7 @@
 // #include "Core/log.hpp"
 #include "Core/Animable.hpp"
 #include <cstdint>
+#include <memory>
 #include <SFML/Window/Keyboard.hpp>
 #include <string>
 
@@ -14,11 +15,9 @@ namespace Game
                    std::string animationsPath)
         : Entity(position, hitbox, scale, kineticState, texture),
           Animable(animationsPath),
-          m_movementState(nullptr)
+          m_movementState(std::make_unique<IdleState>())
 
-    {
-        m_movementState = new IdleState();
-    }
+    {}
 
     Player::~Player() {}
 
@@ -98,12 +97,12 @@ namespace Game
         }
 
         m_previousHitbox = m_hitbox;
-        IMovementState *transitionToState = m_movementState->CheckTransition(*this);
+        std::unique_ptr<IMovementState> transitionToState =
+            m_movementState->CheckTransition(*this);
         if (transitionToState != nullptr)
         {
             m_movementState->OnExit(*this);
-            delete m_movementState;
-            m_movementState = transitionToState;
+            m_movementState = std::move(transitionToState);
             m_movementState->OnEnter(*this);
         }
         else

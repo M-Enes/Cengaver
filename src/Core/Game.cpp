@@ -1,4 +1,5 @@
 #include "Core/Game.hpp"
+#include <memory>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
@@ -14,11 +15,11 @@ namespace Core
             this->specification.windowSpec.title = specification.name;
         }
 
-        window = new Window(specification.windowSpec);
+        window = std::make_unique<Window>(specification.windowSpec);
         window->Create();
     }
 
-    Game::~Game() { window->Destroy(); }
+    Game::~Game() {}
 
     void Game::Run()
     {
@@ -41,8 +42,14 @@ namespace Core
             if (window->GetRenderWindow().hasFocus())
             {
                 window->Clear();
-                for (Layer *layer : layerStack) { layer->OnUpdate(elapsed); }
-                for (Layer *layer : layerStack) { layer->OnRender(*window); }
+                for (std::unique_ptr<Layer>& layer : layerStack)
+                {
+                    layer->OnUpdate(elapsed);
+                }
+                for (std::unique_ptr<Layer>& layer : layerStack)
+                {
+                    layer->OnRender(*window);
+                }
                 window->Display();
             }
         }
@@ -63,13 +70,16 @@ namespace Core
         Layer *layer;
         for (auto it = layerStack.rbegin(); it != layerStack.rend(); it++)
         {
-            layer = *it;
+            layer = it->get();
             if (layer->OnEvent(event)) { break; }
         }
     }
 
     void Game::Stop() { running = false; }
 
-    void Game::PushLayer(Layer& layer) { layerStack.push_back(&layer); }
+    void Game::PushLayer(std::unique_ptr<Layer> layer)
+    {
+        layerStack.push_back(std::move(layer));
+    }
 
 } // namespace Core

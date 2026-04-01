@@ -3,6 +3,7 @@
 #include "Core/Entity.hpp"
 #include "Core/Layer.hpp"
 #include "Game/Player.hpp"
+#include <memory>
 #include <vector>
 
 namespace Game
@@ -21,8 +22,7 @@ namespace Game
       private:
         bool debugMode = false;
         Player *character = nullptr;
-        std::vector<Core::Entity *> entities;
-        static constexpr int blockCount = 10;
-        Core::Entity *block[blockCount];
+        std::vector<Core::Entity *> blocks;
+        std::vector<std::unique_ptr<Core::Entity>> entities;
     };
 } // namespace Game
