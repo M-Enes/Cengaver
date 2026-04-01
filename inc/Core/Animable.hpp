@@ -21,9 +21,9 @@ namespace Core
         Animable(std::string animationsPath);
         ~Animable();
 
-        void goToNextFrame();
-        void goToAnimation(std::string name);
-        sf::Texture *getCurrentFrame();
+        void GoToNextFrame();
+        void GoToAnimation(std::string name);
+        sf::Texture *GetCurrentFrame();
 
       private:
         uint8_t m_currentAnimationFrame = 0;
