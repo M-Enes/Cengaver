@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GameContext.hpp"
 #include <cstdint>
 #include <SFML/Graphics/Texture.hpp>
 #include <unordered_map>
@@ -18,7 +19,7 @@ namespace Core
     class Animable
     {
       public:
-        Animable(std::string animationsPath);
+        Animable(GameContext& context, std::string animationsPath);
         ~Animable();
 
         void GoToNextFrame();

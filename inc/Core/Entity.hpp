@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/GameContext.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -16,7 +17,7 @@ namespace Core
         sf::Vector2f m_position, m_velocity, m_acceleration;
         sf::Vector2f m_gravity = {0, 0.001};
         float m_scale;
-        const sf::Texture m_texture;
+        sf::Texture *m_texture;
         sf::Sprite m_sprite;
         uint8_t m_animationFrame, m_animationOffset;
         struct
@@ -45,8 +46,9 @@ namespace Core
         /// \param texture sf::Texture instance for entity
         ///
         ////////////////////////////////////////////////////////////
-        Entity(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-               KineticState kineticState, sf::Texture texture);
+        Entity(GameContext& context, sf::Vector2f position,
+               sf::Vector2<sf::Vector2f> hitbox, float scale, KineticState kineticState,
+               sf::Texture& texture);
         virtual ~Entity();
 
         virtual void OnEvent(const sf::Event& Event);

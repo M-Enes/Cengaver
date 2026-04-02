@@ -3,6 +3,7 @@
 #include "Core/Animable.hpp"
 #include "Core/Collision.hpp"
 #include "Core/Entity.hpp"
+#include "Core/GameContext.hpp"
 #include "Game/IMovementState.hpp"
 
 namespace Game
@@ -11,9 +12,9 @@ namespace Game
     {
 
       public:
-        Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-               KineticState kineticState, sf::Texture texture,
-               std::string animationsPath);
+        Player(Core::GameContext& context, sf::Vector2f position,
+               sf::Vector2<sf::Vector2f> hitbox, float scale, KineticState kineticState,
+               sf::Texture& texture, std::string animationsPath);
         ~Player();
 
         void OnEvent(const sf::Event& Event) override;

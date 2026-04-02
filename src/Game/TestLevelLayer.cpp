@@ -1,9 +1,12 @@
 #include "Game/TestLevelLayer.hpp"
+#include "Core/AssetManager.hpp"
 #include "Core/Entity.hpp"
+#include "Core/GameContext.hpp"
 #include "Core/log.hpp"
 #include "Core/Physics.hpp"
 #include "Game/Player.hpp"
 #include <memory>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <utility>
@@ -11,78 +14,59 @@
 
 namespace Game
 {
-    TestLevelLayer::TestLevelLayer()
+    TestLevelLayer::TestLevelLayer() {}
+
+    void TestLevelLayer::OnAttach(Core::GameContext& context)
     {
-        Core::logger.info("Test Level Layer constructing...");
-        std::unique_ptr<Player> playerPtr = std::make_unique<Player>(
-            sf::Vector2f{120, 100}, sf::Vector2<sf::Vector2f>{{13, 11}, {20, 25}}, 5,
-            Core::Entity::Dynamic, sf::Texture("../../res/images/idle_0.png"),
-            "../../res/images/animtest");
+        Core::logger.info("Test Level Layer attaching...");
+
+        const sf::Texture *idleTexture =
+            context.assetManager.GetTexture("../../res/images/idle_0.png");
+
+        if (idleTexture == nullptr)
+        {
+            Core::logger.error(
+                "Test Level Layer could attached: Character texture not found.");
+            exit(1);
+        }
+
+        const sf::Texture *blockTexture =
+            context.assetManager.GetTexture("../../res/images/castle-tileset.png");
+
+        if (blockTexture == nullptr)
+        {
+            Core::logger.error(
+                "Test Level Layer could not attached: Block texture not found.");
+            exit(1);
+        }
+
+        std ::unique_ptr<Player> playerPtr = std::make_unique<Player>(
+            context, sf::Vector2f{120, 100},
+            sf::Vector2<sf::Vector2f>{{13, 11}, {20, 25}}, 5, Core::Entity::Dynamic,
+            (sf::Texture&)*idleTexture, "../../res/images/animtest");
 
         character = playerPtr.get();
         entities.push_back(std::move(playerPtr));
 
         character->m_kineticState = Core::Entity::Dynamic;
 
-        std::vector<std::unique_ptr<Core::Entity>> blockPtrs;
+        std::vector<sf::Vector2f> blockPositions = {
+            {200, 520}, {280, 520}, {360, 520}, {440, 520}, {520, 520},
+            {600, 520}, {600, 440}, {200, 440}, {520, 280}, {440, 280}};
 
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{200, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{280, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{360, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{440, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{520, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{600, 520}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{600, 440}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{200, 440}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{520, 280}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-        blockPtrs.push_back(std::make_unique<Core::Entity>(
-            sf::Vector2f{440, 280}, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
-            Core::Entity::Static,
-            sf::Texture("../../res/images/castle-tileset.png", false,
-                        sf::IntRect{{16, 16}, {16, 16}})));
-
-        for (int i = 0; i < blockPtrs.size(); i++)
+        for (const sf::Vector2f& pos : blockPositions)
         {
-            blocks.push_back(blockPtrs[i].get());
-            entities.push_back(std::move(blockPtrs[i]));
+            std::unique_ptr<Core::Entity> blockPtr = std::make_unique<Core::Entity>(
+                context, pos, sf::Vector2<sf::Vector2f>{{0, 0}, {16, 16}}, 5,
+                Core::Entity::Static, (sf::Texture&)*blockTexture);
+
+            blockPtr->m_sprite.setTextureRect(sf::IntRect({{0, 0}, {16, 16}}));
+
+            blocks.push_back(blockPtr.get());
+            entities.push_back(std::move(blockPtr));
         }
-        Core::logger.info("Test Level Layer constructed.");
+
+        Core::logger.info("Test Level Layer attached.");
     }
 
     TestLevelLayer::~TestLevelLayer() {}

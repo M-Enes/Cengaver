@@ -10,11 +10,12 @@
 
 namespace Game
 {
-    Player::Player(sf::Vector2f position, sf::Vector2<sf::Vector2f> hitbox, float scale,
-                   KineticState kineticState, sf::Texture texture,
+    Player::Player(Core::GameContext& context, sf::Vector2f position,
+                   sf::Vector2<sf::Vector2f> hitbox, float scale,
+                   KineticState kineticState, sf::Texture& texture,
                    std::string animationsPath)
-        : Entity(position, hitbox, scale, kineticState, texture),
-          Animable(animationsPath),
+        : Entity(context, position, hitbox, scale, kineticState, texture),
+          Animable(context, animationsPath),
           m_movementState(std::make_unique<IdleState>())
 
     {}

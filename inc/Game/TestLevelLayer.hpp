@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Entity.hpp"
+#include "Core/GameContext.hpp"
 #include "Core/Layer.hpp"
 #include "Game/Player.hpp"
 #include <memory>
@@ -15,6 +16,7 @@ namespace Game
         TestLevelLayer();
         virtual ~TestLevelLayer();
 
+        void OnAttach(Core::GameContext& context) override;
         bool OnEvent(const sf::Event& event) override;
         void OnUpdate(float timeStep) override;
         void OnRender(Core::Window& window) override;
