@@ -1,30 +1,26 @@
 #include "Core/Animable.hpp"
+#include "Core/AssetManager.hpp"
+#include "Core/GameContext.hpp"
 #include <filesystem>
 #include <SFML/Graphics/Texture.hpp>
 #include <string>
 
 namespace Core
 {
-    Animable::Animable(std::string animationsPath)
+    Animable::Animable(GameContext& context, std::string animationsPath)
     {
         for (const auto& entry : std::filesystem::directory_iterator(animationsPath))
         {
             std::string filename = entry.path().filename().string();
             std::string animationName = filename.substr(0, filename.find_last_of('_'));
-            sf::Texture *texture = new sf::Texture(entry.path());
+            sf::Texture *texture =
+                (sf::Texture *)context.assetManager.GetTexture(entry.path().string());
             m_animations[animationName].push_back(texture);
         }
 
         GoToAnimation(m_animations.begin()->first);
     }
-    Animable::~Animable()
-    {
-        for (auto it = m_animations.begin(); it != m_animations.end(); it++)
-        {
-            auto& vector = it->second;
-            for (int i = 0; i < vector.size(); i++) { delete vector[i]; }
-        }
-    }
+    Animable::~Animable() {}
 
     void Animable::GoToNextFrame()
     {

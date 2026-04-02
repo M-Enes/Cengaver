@@ -3,33 +3,36 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include "Core/GameContext.hpp"
 #include "Core/Layer.hpp"
 
 namespace Core
 {
     Game::Game(const GameSpecification& specification)
-        : specification(specification)
+        : m_specification(specification)
     {
         if (specification.windowSpec.title.empty())
         {
-            this->specification.windowSpec.title = specification.name;
+            this->m_specification.windowSpec.title = specification.name;
         }
 
-        window = std::make_unique<Window>(specification.windowSpec);
-        window->Create();
+        m_window = std::make_unique<Window>(m_specification.windowSpec);
+        m_window->Create();
+
+        m_context = std::make_unique<GameContext>(*m_window, m_assetManager);
     }
 
     Game::~Game() {}
 
     void Game::Run()
     {
-        running = true;
+        m_running = true;
 
         sf::Clock clock;
         sf::Time previous = clock.restart();
-        while (running)
+        while (m_running)
         {
-            if (window->ShouldClose())
+            if (m_window->ShouldClose())
             {
                 Stop();
                 break;
@@ -37,20 +40,20 @@ namespace Core
 
             float elapsed = (float)clock.restart().asMicroseconds() / 1000;
 
-            window->PollEvents(this);
+            m_window->PollEvents(this);
 
-            if (window->GetRenderWindow().hasFocus())
+            if (m_window->GetRenderWindow().hasFocus())
             {
-                window->Clear();
-                for (std::unique_ptr<Layer>& layer : layerStack)
+                m_window->Clear();
+                for (std::unique_ptr<Layer>& layer : m_layerStack)
                 {
                     layer->OnUpdate(elapsed);
                 }
-                for (std::unique_ptr<Layer>& layer : layerStack)
+                for (std::unique_ptr<Layer>& layer : m_layerStack)
                 {
-                    layer->OnRender(*window);
+                    layer->OnRender(*m_window);
                 }
-                window->Display();
+                m_window->Display();
             }
         }
     }
@@ -60,7 +63,7 @@ namespace Core
         // events like sf::Event::Closed should also be handled here
         if (event.is<sf::Event::Closed>())
         {
-            window->Close();
+            m_window->Close();
             return;
         }
 
@@ -68,18 +71,21 @@ namespace Core
         // if event is handled, do not send the event to other layers, just break the loop
 
         Layer *layer;
-        for (auto it = layerStack.rbegin(); it != layerStack.rend(); it++)
+        for (auto it = m_layerStack.rbegin(); it != m_layerStack.rend(); it++)
         {
             layer = it->get();
             if (layer->OnEvent(event)) { break; }
         }
     }
 
-    void Game::Stop() { running = false; }
+    void Game::Stop() { m_running = false; }
 
     void Game::PushLayer(std::unique_ptr<Layer> layer)
     {
-        layerStack.push_back(std::move(layer));
+        layer->OnAttach(*m_context);
+        m_layerStack.push_back(std::move(layer));
     }
+
+    AssetManager& Game::GetAssetManager() { return m_assetManager; }
 
 } // namespace Core
